@@ -168,7 +168,7 @@
 						<label value="Nombre ITT : " />
 					</hlayout>
 					<vlayout>
-						<textbox width="200px" constraint="/[0-9]+/: Veuiller entrer un nombre" 
+						<textbox width="200px" constraint="/[0-9.]+/: Veuiller entrer un nombre" 
 							value="@bind(vm.demandeCreation.nombreITT)" />
 					</vlayout>
 				</hlayout>
