@@ -136,7 +136,7 @@
 						value="@bind(vm.dateSaisieToString(each.dateSaisie))" />
 
 					<hlayout>
-						<image tooltiptext="Editer la demande"
+						<image tooltiptext="Modifier la demande"
 							sclass="ListAction edit"
 							visible="@bind(each.affichageBoutonModifier)"
 							onClick="@command('modifierDemande',ref=each)" />
