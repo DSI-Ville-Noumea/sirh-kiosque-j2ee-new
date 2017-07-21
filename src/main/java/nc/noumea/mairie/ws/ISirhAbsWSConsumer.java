@@ -75,6 +75,8 @@ public interface ISirhAbsWSConsumer {
 
 	List<RefTypeAbsenceDto> getRefTypeAbsenceKiosque(Integer idRefGroupeAbsence, Integer idAgent);
 
+	List<RefTypeAbsenceDto> getRefTypeAbsenceForFilterKiosque(Integer idRefGroupeAbsence, Integer idAgent);
+
 	List<RefTypeAbsenceDto> getAllRefTypeAbsence();
 
 	List<RefEtatAbsenceDto> getEtatAbsenceKiosque(String onglet);

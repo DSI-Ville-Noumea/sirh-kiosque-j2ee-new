@@ -199,12 +199,15 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	@Command
 	@NotifyChange({ "listeTypeAbsenceFiltre", "typeAbsenceFiltre" })
 	public void alimenteTypeFamilleAbsence() {
-		List<RefTypeAbsenceDto> filtreFamilleAbsence = absWsConsumer.getRefTypeAbsenceKiosque(getGroupeAbsenceFiltre().getIdRefGroupeAbsence(), getAgentFiltre() == null ? null : getAgentFiltre()
+		// #39896 : l'approbateur peut filtrer sur toutes les maladies et congés exceptionnels.
+		List<RefTypeAbsenceDto> filtreFamilleAbsence = absWsConsumer.getRefTypeAbsenceForFilterKiosque(getGroupeAbsenceFiltre().getIdRefGroupeAbsence(), getAgentFiltre() == null ? null : getAgentFiltre()
 				.getIdAgent());
 		if (filtreFamilleAbsence.size() == 1) {
 			setListeTypeAbsenceFiltre(null);
 			setTypeAbsenceFiltre(null);
 		} else {
+			// #39525 : Ajout d'une "case vide" au début du filtre
+			filtreFamilleAbsence.add(0, new RefTypeAbsenceDto());
 			setListeTypeAbsenceFiltre(filtreFamilleAbsence);
 			setTypeAbsenceFiltre(null);
 		}
