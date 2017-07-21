@@ -108,6 +108,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 
 	/* Filtres */
 	private static final String sirhTypeAbsenceKiosqueUrl = "filtres/getTypeAbsenceKiosque";
+	private static final String sirhTypeAbsenceForFilterKiosqueUrl = "filtres/getTypeAbsenceForFilterKiosque";
 	private static final String sirhEtatAbsenceKiosqueUrl = "filtres/getEtats";
 	private static final String sirhGroupeAbsenceUrl = "filtres/getGroupesAbsence";
 	private static final String sirhGroupeAbsenceForAgentUrl = "filtres/getGroupesAbsenceForAgent";
@@ -196,6 +197,19 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 	@Override
 	public List<RefTypeAbsenceDto> getRefTypeAbsenceKiosque(Integer idRefGroupeAbsence, Integer idAgent) {
 		String url = String.format(sirhAbsWsBaseUrl + sirhTypeAbsenceKiosqueUrl);
+		HashMap<String, String> params = new HashMap<>();
+		if (idRefGroupeAbsence != null)
+			params.put("idRefGroupeAbsence", idRefGroupeAbsence.toString());
+		if (idAgent != null)
+			params.put("idAgent", idAgent.toString());
+
+		ClientResponse res = createAndFireGetRequest(params, url);
+		return readResponseAsList(RefTypeAbsenceDto.class, res, url);
+	}
+
+	@Override
+	public List<RefTypeAbsenceDto> getRefTypeAbsenceForFilterKiosque(Integer idRefGroupeAbsence, Integer idAgent) {
+		String url = String.format(sirhAbsWsBaseUrl + sirhTypeAbsenceForFilterKiosqueUrl);
 		HashMap<String, String> params = new HashMap<>();
 		if (idRefGroupeAbsence != null)
 			params.put("idRefGroupeAbsence", idRefGroupeAbsence.toString());

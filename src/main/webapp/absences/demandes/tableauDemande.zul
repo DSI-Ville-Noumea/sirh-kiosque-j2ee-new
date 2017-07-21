@@ -21,7 +21,7 @@
 					selectedItem="@bind(vm.typeAbsenceFiltre)"
 					visible="@bind(not empty vm.listeTypeAbsenceFiltre)">
 					<template name="model">
-						<comboitem label="@bind(each.libelle)" />
+						<comboitem height="20px" label="@bind(each.libelle)" />
 					</template>
 				</combobox>
 			</hlayout>
