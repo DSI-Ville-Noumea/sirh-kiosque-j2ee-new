@@ -159,6 +159,7 @@
 					<vlayout>
 						<checkbox
 							checked="@bind(vm.demandeCreation.prolongation)"
+							onCheck="@command('refreshNombreITT')"
 							label="Prolongation" />
 					</vlayout>
 				</hlayout>
