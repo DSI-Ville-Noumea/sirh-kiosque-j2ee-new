@@ -8,7 +8,7 @@
 				<label style="font-size: 28px;color: #EE7203;"
 					value="Absences" />
 				<label style="font-size: 18px;color: #004f9f;"
-					value="Gestion des compteurs" />
+					value="Visualisation des compteurs" />
 			</vlayout>
 			<separator />
 			<div sclass="RHTitle2Line" />
@@ -58,78 +58,7 @@
 							<textbox readonly="true"
 								value="@bind(vm.soldeHeure(vm.soldeCourant.soldeRecup))" />
 						</hlayout>
-						<separator />
-						<div sclass="RHTitle2Line" />
-						<separator />
-						<hlayout>
-							<hlayout width="400px"
-								style="text-align:right;">
-								<label value="Durée à ajouter" />
-							</hlayout>
-							<hlayout>
-								<textbox cols="3" maxlength="3"
-									value="@bind(vm.heureAjout)"
-									onChange="@command('actualiseNouveauSoldeRecup',ref='ajouter')" />
-								<label value="heures" />
-								<textbox cols="2" maxlength="2"
-									value="@bind(vm.minuteAjout)"
-									onChange="@command('actualiseNouveauSoldeRecup',ref='ajouter')" />
-								<label value="minutes" />
-							</hlayout>
-						</hlayout>
-						<hlayout>
-							<hlayout width="400px"
-								style="text-align:right;">
-								<label value="Durée à retrancher" />
-							</hlayout>
-							<hlayout>
-								<textbox cols="3" maxlength="3"
-									value="@bind(vm.heureRetrait)"
-									onChange="@command('actualiseNouveauSoldeRecup',ref='retrancher')" />
-								<label value="heures" />
-								<textbox cols="2" maxlength="2"
-									value="@bind(vm.minuteRetrait)"
-									onChange="@command('actualiseNouveauSoldeRecup',ref='retrancher')" />
-								<label value="minutes" />
-							</hlayout>
-						</hlayout>
-						<hlayout>
-							<hlayout width="400px"
-								style="text-align:right;">
-								<label value="Motif" />
-							</hlayout>
-							<combobox width="200px" readonly="true"
-								value="@bind(vm.motifCompteur.libelle)"
-								model="@bind(vm.listeMotifsCompteur)"
-								selectedItem="@bind(vm.motifCompteur)">
-								<template name="model">
-									<comboitem
-										label="@bind(each.libelle)" />
-								</template>
-							</combobox>
-						</hlayout>
-						<separator />
-						<div sclass="RHTitle2Line" />
-						<separator />
-						<hlayout>
-							<hlayout width="400px"
-								style="text-align:right;">
-								<label value="Nouveau solde" />
-							</hlayout>
-							<textbox readonly="true"
-								value="@bind(vm.nouveauSolde)" />
-						</hlayout>
 					</vlayout>
-					<separator />
-					<div sclass="RHTitle2Line" />
-					<separator />
-					<div align="center"
-						visible="@bind(not empty vm.agentFiltre) ">
-						<hlayout>
-							<button label="Valider"
-								onClick="@command('saveCompteurRecup')" />
-						</hlayout>
-					</div>
 				</div>
 			</hlayout>
 
