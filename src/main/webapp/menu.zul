@@ -47,7 +47,7 @@
 					<menuitem label="Gestion des demandes"
 						visible="@bind(vm.droitsAbsence.visuSolde)"
 						onClick="@command('changeEcran',page='/absences/demandes/gestionDemandes',ecran=content)" />
-					<menuitem label="Gestion des compteurs"
+					<menuitem label="Visualisation des compteurs"
 						visible="@bind(vm.droitsAbsence.majSolde)"
 						onClick="@command('changeEcran',page='/absences/compteurs/gestionCompteurs',ecran=content)" />
 				</menupopup>

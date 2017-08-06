@@ -31,10 +31,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
+
 import nc.noumea.mairie.ads.dto.EntiteDto;
 import nc.noumea.mairie.kiosque.abs.dto.CompteurDto;
 import nc.noumea.mairie.kiosque.abs.dto.FiltreSoldeDto;
-import nc.noumea.mairie.kiosque.abs.dto.MotifCompteurDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceEnum;
 import nc.noumea.mairie.kiosque.abs.dto.SaisieGardeDto;
@@ -44,34 +50,14 @@ import nc.noumea.mairie.kiosque.dto.ReturnMessageDto;
 import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.kiosque.viewModel.AbstractViewModel;
 
-import org.joda.time.DateTime;
-import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.select.annotation.VariableResolver;
-
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class CompteursViewModel extends AbstractViewModel implements Serializable {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7086425630331413874L;
 
 	private String formulaireRecup;
 
-	private List<MotifCompteurDto> listeMotifsCompteur;
-
-	private MotifCompteurDto motifCompteur;
-
 	private SoldeDto soldeCourant;
-
-	private String nouveauSolde;
-
-	private String nouveauSoldeAnneePrec;
 
 	private CompteurDto compteurACreer;
 
@@ -98,12 +84,6 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 	private SaisieGardeDto saisieGarde;
 
 	List<String> listVide = new ArrayList<String>();
-
-	// POUR LA GESTION DES HEURES
-	private String heureAjout;
-	private String minuteAjout;
-	private String heureRetrait;
-	private String minuteRetrait;
 
 	@Init
 	public void initCompteurs() {
@@ -191,10 +171,9 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 	}
 
 	@Command
-	@NotifyChange({ "formulaireRecup", "motifCompteur", "soldeCourant" })
+	@NotifyChange({ "formulaireRecup", "soldeCourant" })
 	public void refreshNomAgent() {
 		setFormulaireRecup(null);
-		setMotifCompteur(null);
 		setSoldeCourant(null);
 		if (getTypeAbsenceFiltre().getIdRefTypeAbsence() == RefTypeAbsenceEnum.RECUP.getValue()) {
 			// juste pour afficher le nom de l'agent dans le formulaire
@@ -210,8 +189,7 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 
 	@Command
 	@NotifyChange({ "typeAbsenceFiltre", "serviceFiltre", "agentFiltre", "formulaireRecup", 
-			"listeMotifsCompteur", "motifCompteur", "soldeCourant", "nouveauSolde", "compteurACreer",
-			"nouveauSoldeAnneePrec", "minuteAjout", "heureAjout", "minuteRetrait", "heureRetrait" })
+			"soldeCourant", "compteurACreer", "nouveauSoldeAnneePrec" })
 	public void chargeFormulaire() {
 		videFormulaireSansType();
 		if (getTypeAbsenceFiltre().getIdRefTypeAbsence() == RefTypeAbsenceEnum.RECUP.getValue()) {
@@ -227,41 +205,10 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 				SoldeDto result = absWsConsumer.getAgentSolde(getAgentFiltre().getIdAgent(), filtreDto);
 				setSoldeCourant(result);
 			}
-			// on charge la liste des motifs d'alimenation des compteurs
-			setListeMotifsCompteur(absWsConsumer.getListeMotifsCompteur(getTypeAbsenceFiltre().getIdRefTypeAbsence()));
 			setCompteurACreer(new CompteurDto());
 
 		}
 	}
-
-	@Command
-	@NotifyChange({ "nouveauSolde", "nouveauSoldeAnneePrec" })
-	public void actualiseNouveauSoldeRecup(@BindingParam("ref") String texte) {
-		setNouveauSolde(null);
-		setNouveauSoldeAnneePrec(null);
-		if (texte != null && texte.equals("ajouter") && getHeureAjout() != null && getMinuteAjout() != null) {
-			// on recupere la durée et on transforme ce temps en minute
-			String heures = getHeureAjout();
-			String minutes = getMinuteAjout();
-			// on rempli le DTO avec la valeur
-			Double dureeAj = (double) ((Integer.valueOf(heures) * 60) + Integer.valueOf(minutes));
-			getCompteurACreer().setDureeAAjouter(dureeAj == 0 ? null : dureeAj);
-			// on affiche le nouveau solde
-			setNouveauSolde(getHeureMinute(getSoldeCourant().getSoldeRecup(), getCompteurACreer()));
-		} else if (texte != null && texte.equals("retrancher") && getHeureRetrait() != null
-				&& getMinuteRetrait() != null) {
-			// on recupere la durée et on transforme ce temps en minute
-			String heures = getHeureRetrait();
-			String minutes = getMinuteRetrait();
-			// on rempli le DTO avec la valeur
-			Double dureeRetr = (double) ((Integer.valueOf(heures) * 60) + Integer.valueOf(minutes));
-			getCompteurACreer().setDureeARetrancher(dureeRetr == 0 ? null : dureeRetr);
-			// on affiche le nouveau solde
-			setNouveauSolde(getHeureMinute(getSoldeCourant().getSoldeRecup(), getCompteurACreer()));
-		}
-	}
-
-	
 
 	public String soldeJour(Double solde) {
 		if (solde == 0)
@@ -287,115 +234,17 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 		return res;
 	}
 
-	private String getHeureMinute(Double soldeExistant, CompteurDto compteurACreer) {
-		Integer nombreMinute = (int) (soldeExistant
-				+ (compteurACreer.getDureeAAjouter() == null ? 0 : compteurACreer.getDureeAAjouter()) - (compteurACreer
-				.getDureeARetrancher() == null ? 0 : compteurACreer.getDureeARetrancher()));
-
-		if (nombreMinute == 0)
-			return "aucun";
-		return getHeureMinute(nombreMinute);
-	}
-
 	public String concatAgent(String nom, String prenom) {
 		return nom + " " + prenom;
-	}
-
-	@Command
-	@NotifyChange({ "typeAbsenceFiltre", "serviceFiltre", "agentFiltre", "formulaireRecup", "listeMotifsCompteur", "motifCompteur", "soldeCourant", "nouveauSolde", "compteurACreer",
-			"nouveauSoldeAnneePrec", "minuteAjout", "heureAjout", "minuteRetrait", "heureRetrait" })
-	public void saveCompteurRecup() {
-
-		if (IsFormValid(getCompteurACreer())) {
-			getCompteurACreer().setDateDebut(null);
-			getCompteurACreer().setDateFin(null);
-			getCompteurACreer().setAnneePrecedente(false);
-			getCompteurACreer().setIdAgent(getAgentFiltre().getIdAgent());
-
-			MotifCompteurDto motifDto = new MotifCompteurDto();
-			motifDto.setIdMotifCompteur(getMotifCompteur().getIdMotifCompteur());
-			getCompteurACreer().setMotifCompteurDto(motifDto);
-			getCompteurACreer().setOrganisationSyndicaleDto(null);
-
-			ReturnMessageDto result = absWsConsumer.saveCompteurRecup(getCurrentUser().getAgent().getIdAgent(),
-					getCompteurACreer());
-
-			final HashMap<String, Object> map = new HashMap<String, Object>();
-			List<ValidationMessage> listErreur = new ArrayList<ValidationMessage>();
-			List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
-			// ici la liste info est toujours vide alors on ajoute un
-			// message
-			if (result.getErrors().size() == 0)
-				result.getInfos().add(
-						"Le compteur de récupération de l'agent " + getAgentFiltre().getNom() + " "
-								+ getAgentFiltre().getPrenom() + " a été enregistré correctement.");
-			for (String error : result.getErrors()) {
-				ValidationMessage vm = new ValidationMessage(error);
-				listErreur.add(vm);
-			}
-			for (String info : result.getInfos()) {
-				ValidationMessage vm = new ValidationMessage(info);
-				listInfo.add(vm);
-			}
-			map.put("errors", listErreur);
-			map.put("infos", listInfo);
-			Executions.createComponents("/messages/returnMessage.zul", null, map);
-
-			// on reinitialise le formulaire
-			videFormulaire();
-		}
-
-	}
-
-	private boolean IsFormValid(CompteurDto compteur) {
-
-		List<ValidationMessage> vList = new ArrayList<ValidationMessage>();
-
-		// Durée
-		if (compteur.getDureeAAjouter() == null && compteur.getDureeARetrancher() == null) {
-			vList.add(new ValidationMessage("La durée est obligatoire."));
-		}
-		if (compteur.getDureeAAjouter() != null && compteur.getDureeARetrancher() != null) {
-			if (compteur.getDureeAAjouter() != 0 && compteur.getDureeARetrancher() != 0) {
-				vList.add(new ValidationMessage("Une seule durée doit être choisie."));
-			}
-		}
-
-		// compteur
-		if (getMotifCompteur() == null) {
-			vList.add(new ValidationMessage("Le motif est obligatoire."));
-
-		}
-
-		if (vList.size() > 0) {
-			final HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("errors", vList);
-			Executions.createComponents("/messages/returnMessage.zul", null, map);
-			return false;
-		} else
-			return true;
-	}
-
-	private void videFormulaire() {
-		videFormulaireSansType();
-		setTypeAbsenceFiltre(null);
 	}
 
 	private void videFormulaireSansType() {
 		setAnneePrec("0");
 		setFormulaireRecup(null);
-		setListeMotifsCompteur(null);
-		setMotifCompteur(null);
 		setSoldeCourant(null);
-		setNouveauSolde(null);
-		setNouveauSoldeAnneePrec(null);
 		setCompteurACreer(null);
 		setAgentFiltre(null);
 		setServiceFiltre(null);
-		setHeureAjout(null);
-		setMinuteAjout(null);
-		setHeureRetrait(null);
-		setMinuteRetrait(null);
 	}
 
 	public DateTime getFirstDayOfCurrentMonth() {
@@ -467,22 +316,6 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 		this.formulaireRecup = formulaireRecup;
 	}
 
-	public List<MotifCompteurDto> getListeMotifsCompteur() {
-		return listeMotifsCompteur;
-	}
-
-	public void setListeMotifsCompteur(List<MotifCompteurDto> listeMotifsCompteur) {
-		this.listeMotifsCompteur = listeMotifsCompteur;
-	}
-
-	public MotifCompteurDto getMotifCompteur() {
-		return motifCompteur;
-	}
-
-	public void setMotifCompteur(MotifCompteurDto motifCompteur) {
-		this.motifCompteur = motifCompteur;
-	}
-
 	public SoldeDto getSoldeCourant() {
 		return soldeCourant;
 	}
@@ -497,22 +330,6 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 
 	public void setCompteurACreer(CompteurDto compteurACreer) {
 		this.compteurACreer = compteurACreer;
-	}
-
-	public String getNouveauSolde() {
-		return nouveauSolde;
-	}
-
-	public void setNouveauSolde(String nouveauSolde) {
-		this.nouveauSolde = nouveauSolde;
-	}
-
-	public String getNouveauSoldeAnneePrec() {
-		return nouveauSoldeAnneePrec;
-	}
-
-	public void setNouveauSoldeAnneePrec(String nouveauSoldeAnneePrec) {
-		this.nouveauSoldeAnneePrec = nouveauSoldeAnneePrec;
 	}
 
 	public String getAnneePrec() {
@@ -553,38 +370,6 @@ public class CompteursViewModel extends AbstractViewModel implements Serializabl
 
 	public void setListVide(List<String> listVide) {
 		this.listVide = listVide;
-	}
-
-	public String getHeureAjout() {
-		return heureAjout;
-	}
-
-	public void setHeureAjout(String heureAjout) {
-		this.heureAjout = heureAjout;
-	}
-
-	public String getMinuteAjout() {
-		return minuteAjout;
-	}
-
-	public void setMinuteAjout(String minuteAjout) {
-		this.minuteAjout = minuteAjout;
-	}
-
-	public String getHeureRetrait() {
-		return heureRetrait;
-	}
-
-	public void setHeureRetrait(String heureRetrait) {
-		this.heureRetrait = heureRetrait;
-	}
-
-	public String getMinuteRetrait() {
-		return minuteRetrait;
-	}
-
-	public void setMinuteRetrait(String minuteRetrait) {
-		this.minuteRetrait = minuteRetrait;
 	}
 
 	public String getNomatrAgent(Integer idAgent) {
