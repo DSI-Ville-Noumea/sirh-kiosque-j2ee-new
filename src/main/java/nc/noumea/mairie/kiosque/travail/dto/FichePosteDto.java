@@ -25,7 +25,10 @@ package nc.noumea.mairie.kiosque.travail.dto;
  */
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FichePosteDto {
 
@@ -77,6 +80,18 @@ public class FichePosteDto {
 	private TitrePosteDto titrePoste;
 
 	private Integer idAgent;
+
+	//Version 2
+	private Integer version;
+	private String specialisation;
+	private String informationsComplementaires;
+	private Integer idNiveauManagement;
+	private String niveauManagement;
+
+	private List<ActiviteMetierSavoirFaire> activiteMetier = new ArrayList<>();
+	private List<String> savoirFaireMetier = new ArrayList<>();
+	private List<String> activiteGenerale = new ArrayList<>();
+	private List<String> conditionExercice = new ArrayList<>();
 
 	public String getNumero() {
 		return numero;
@@ -406,4 +421,122 @@ public class FichePosteDto {
 		this.idAgent = idAgent;
 	}
 
+	public String getNiveauManagement() {
+		return niveauManagement;
+	}
+
+	public void setNiveauManagement(String niveauManagement) {
+		this.niveauManagement = niveauManagement;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public String getSpecialisation() {
+		return specialisation;
+	}
+
+	public void setSpecialisation(String specialisation) {
+		this.specialisation = specialisation;
+	}
+
+	public String getInformationsComplementaires() {
+		return informationsComplementaires;
+	}
+
+	public void setInformationsComplementaires(String informationsComplementaires) {
+		this.informationsComplementaires = informationsComplementaires;
+	}
+
+	public Integer getIdNiveauManagement() {
+		return idNiveauManagement;
+	}
+
+	public void setIdNiveauManagement(Integer idNiveauManagement) {
+		this.idNiveauManagement = idNiveauManagement;
+	}
+
+	public List<ActiviteMetierSavoirFaire> getActiviteMetier() {
+		return activiteMetier;
+	}
+
+	public void setActiviteMetier(List<ActiviteMetierSavoirFaire> activiteMetier) {
+		this.activiteMetier = activiteMetier;
+	}
+
+	public Map<String, List<String>> getActiviteMetierFormate() {
+		Map<String, List<String>> activiteMetierFormate = new HashMap<>();
+		if (activiteMetier == null) {
+			return activiteMetierFormate;
+		}
+		for (ActiviteMetierSavoirFaire amsf : activiteMetier) {
+			if (activiteMetierFormate.get(amsf.activiteMetier) == null) {
+				activiteMetierFormate.put(amsf.activiteMetier, new ArrayList<String>());
+			}
+			if (amsf.savoirFaire != null && !amsf.savoirFaire.isEmpty()) {
+				activiteMetierFormate.get(amsf.activiteMetier).add(amsf.savoirFaire);
+			}
+		}
+		return activiteMetierFormate;
+	}
+
+	public List<String> getSavoirFaireMetier() {
+		return savoirFaireMetier;
+	}
+
+	public void setSavoirFaireMetier(List<String> savoirFaireMetier) {
+		this.savoirFaireMetier = savoirFaireMetier;
+	}
+
+	public List<String> getActiviteGenerale() {
+		return activiteGenerale;
+	}
+
+	public void setActiviteGenerale(List<String> activiteGenerale) {
+		this.activiteGenerale = activiteGenerale;
+	}
+
+	public List<String> getConditionExercice() {
+		return conditionExercice;
+	}
+
+	public void setConditionExercice(List<String> conditionExercice) {
+		this.conditionExercice = conditionExercice;
+	}
+
+	private static class ActiviteMetierSavoirFaire {
+		private String activiteMetier;
+		private String savoirFaire;
+
+		public ActiviteMetierSavoirFaire() {
+			this.activiteMetier = "";
+			this.savoirFaire = "";
+		}
+
+		public ActiviteMetierSavoirFaire(String activiteMetier, String savoirFaire) {
+			this.activiteMetier = activiteMetier;
+			this.savoirFaire = savoirFaire;
+		}
+
+		public String getActiviteMetier() {
+			return activiteMetier;
+		}
+
+		public void setActiviteMetier(String activiteMetier) {
+			this.activiteMetier = activiteMetier;
+		}
+
+		public String getSavoirFaire() {
+			return savoirFaire;
+		}
+
+		public void setSavoirFaire(String savoirFaire) {
+			this.savoirFaire = savoirFaire;
+		}
+	}
 }
