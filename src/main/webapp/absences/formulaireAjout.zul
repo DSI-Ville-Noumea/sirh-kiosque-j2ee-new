@@ -6,7 +6,7 @@
 				visible="@bind(not empty vm.typeAbsenceCourant.typeSaisiDto)">
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.compteurCollectif)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Org. syndicale : " />
 					</hlayout>
 					<hlayout>
@@ -22,7 +22,7 @@
 					</hlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px"
+					<hlayout width="155px"
 						visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.calendarDateDebut)">
 						<label value="Date de début : " />
 					</hlayout>
@@ -42,7 +42,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.calendarHeureDebut)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Heure de début : " />
 					</hlayout>
 					<hlayout>
@@ -65,7 +65,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.duree)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Durée : " />
 					</hlayout>
 					<hlayout>
@@ -78,7 +78,7 @@
 					</hlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px"
+					<hlayout width="155px"
 						visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.calendarDateFin)">
 						<label value="Date de fin : " />
 					</hlayout>
@@ -98,7 +98,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.calendarHeureFin)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Heure de fin : " />
 					</hlayout>
 					<hlayout>
@@ -120,7 +120,19 @@
 					</hlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px"
+					<hlayout width="155px"
+						visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.dateAccidentTravail)">
+						<label value="Date de l'accident du travail : " />
+					</hlayout>
+					<hlayout>
+						<datebox
+							visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.dateAccidentTravail)"
+							cols="14" format="dd/MM/yyyy" maxlength="10"
+							value="@bind(vm.demandeCreation.dateAccidentTravail)" />
+					</hlayout>
+				</hlayout>
+				<hlayout>
+					<hlayout width="155px"
 						visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.dateDeclaration)">
 						<label value="Date de déclaration : " />
 					</hlayout>
@@ -133,7 +145,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.prescripteur)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Prescripteur : " />
 					</hlayout>
 					<vlayout>
@@ -143,7 +155,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.nomEnfant)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Nom enfant : " />
 					</hlayout>
 					<vlayout>
@@ -153,7 +165,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.prolongation)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Prolongation : " />
 					</hlayout>
 					<vlayout>
@@ -165,7 +177,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.nombreITT)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Nombre ITT : " />
 					</hlayout>
 					<vlayout>
@@ -175,7 +187,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.siegeLesion)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Siège des lésions : " />
 					</hlayout>
 					<vlayout>
@@ -191,7 +203,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.atReference)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Accident de travail de référence : " />
 					</hlayout>
 					<vlayout>
@@ -205,7 +217,7 @@
 					</vlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Commentaire : " />
 					</hlayout>
 					<vlayout>
@@ -216,7 +228,7 @@
 					</vlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Pièces jointes : " />
 						<image tooltiptext="@bind(vm.typeAbsenceCourant.typeSaisiDto.infosPieceJointe)" sclass="ListAction help" visible="@bind(not empty vm.typeAbsenceCourant.typeSaisiDto.infosPieceJointe)" />
 					</hlayout>
@@ -246,7 +258,7 @@
 				visible="@bind(not empty vm.typeAbsenceCourant.typeSaisiCongeAnnuelDto)">
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiCongeAnnuelDto.calendarDateDebut)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Date de début : " />
 					</hlayout>
 					<hlayout>
@@ -266,7 +278,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiCongeAnnuelDto.calendarDateFin)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Date de fin : " />
 					</hlayout>
 					<hlayout>
@@ -286,7 +298,7 @@
 				</hlayout>
 				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiCongeAnnuelDto.calendarDateReprise)">
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Date de reprise : " />
 					</hlayout>
 					<hlayout>
@@ -296,7 +308,7 @@
 					</hlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Durée : " />
 					</hlayout>
 					<hlayout>
@@ -314,7 +326,7 @@
 					</hlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Commentaire : " />
 					</hlayout>
 					<vlayout>
@@ -325,7 +337,7 @@
 					</vlayout>
 				</hlayout>
 				<hlayout>
-					<hlayout width="150px">
+					<hlayout width="155px">
 						<label value="Pièces jointes : " />
 					</hlayout>
 					
@@ -349,7 +361,7 @@
 			</vlayout>
 			<!-- FIN POUR LES CONGES ANNUELS -->
 			<hlayout>
-				<hlayout width="150px">
+				<hlayout width="155px">
 					<label value="Etat de la demande : " />
 				</hlayout>
 				<hlayout>
