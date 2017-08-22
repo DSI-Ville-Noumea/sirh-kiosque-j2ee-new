@@ -113,6 +113,9 @@ public class DemandeDto implements Comparable<DemandeDto>, Serializable  {
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@JsonDeserialize(using = JsonDateDeserializer.class)
 	private Date dateDeclaration;
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@JsonDeserialize(using = JsonDateDeserializer.class)
+	private Date dateAccidentTravail;
 	private boolean prolongation;
 	private RefTypeDto typeAccidentTravail;
 	private RefTypeDto typeSiegeLesion;
@@ -483,6 +486,14 @@ public class DemandeDto implements Comparable<DemandeDto>, Serializable  {
 
 	public void setDateDeclaration(Date dateDeclaration) {
 		this.dateDeclaration = dateDeclaration;
+	}
+
+	public Date getDateAccidentTravail() {
+		return dateAccidentTravail;
+	}
+
+	public void setDateAccidentTravail(Date dateAccidentTravail) {
+		this.dateAccidentTravail = dateAccidentTravail;
 	}
 
 	public boolean isProlongation() {
