@@ -511,6 +511,13 @@ public class ModifierDemandeViewModel {
 					vList.add(new ValidationMessage("Le prescripteur est obligatoire."));
 				}
 			}
+
+			// Date de l'accident du travail
+			if (getDemandeCourant().getTypeSaisi().isDateAccidentTravail()) {
+				if (getDemandeCourant().getDateAccidentTravail() == null) {
+					vList.add(new ValidationMessage("La date de l'accident du travail est obligatoire."));
+				}
+			}
 		} else if (getDemandeCourant().getTypeSaisiCongeAnnuel() != null) {
 			if (getDemandeCourant().getTypeSaisiCongeAnnuel().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
