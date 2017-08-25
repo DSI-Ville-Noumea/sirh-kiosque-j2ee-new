@@ -6,7 +6,7 @@
 		onClose="@command('refreshDemande')" width="500px">
 		<div sclass="fond" height="100%">
 			<hlayout>
-				<hlayout width="150px">
+				<hlayout width="155px">
 					<label value="Famille d'absence : " />
 				</hlayout>
 				<hlayout>
@@ -21,7 +21,7 @@
 						visible="@bind(not empty vm.demandeCourant.typeSaisi)">
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.compteurCollectif)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Org. syndicale : " />
 							</hlayout>
 							<hlayout>
@@ -37,7 +37,7 @@
 							</hlayout>
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px"
+							<hlayout width="155px"
 								visible="@bind(vm.demandeCourant.typeSaisi.calendarDateDebut)">
 								<label value="Date de début : " />
 							</hlayout>
@@ -56,7 +56,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.calendarHeureDebut)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Heure de début : " />
 							</hlayout>
 							<hlayout>
@@ -81,7 +81,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.duree)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Durée : " />
 							</hlayout>
 							<hlayout>
@@ -94,7 +94,7 @@
 							</hlayout>
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px"
+							<hlayout width="155px"
 								visible="@bind(vm.demandeCourant.typeSaisi.calendarDateFin)">
 								<label value="Date de fin : " />
 							</hlayout>
@@ -113,7 +113,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.calendarHeureFin)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Heure de fin : " />
 							</hlayout>
 							<hlayout>
@@ -138,7 +138,19 @@
 						</hlayout>
 						<!-- Maladies -->
 						<hlayout>
-							<hlayout width="150px"
+							<hlayout width="155px"
+								visible="@bind(vm.demandeCourant.typeSaisi.dateAccidentTravail)">
+								<label value="Date de l'accident du travail : " />
+							</hlayout>
+							<hlayout>
+								<datebox
+									visible="@bind(vm.demandeCourant.typeSaisi.dateAccidentTravail)"
+									cols="14" format="dd/MM/yyyy" maxlength="10"
+									value="@bind(vm.demandeCourant.dateAccidentTravail)" />
+							</hlayout>
+						</hlayout>
+						<hlayout>
+							<hlayout width="155px"
 								visible="@bind(vm.demandeCourant.typeSaisi.dateDeclaration)">
 								<label value="Date de déclaration : " />
 							</hlayout>
@@ -151,7 +163,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.prescripteur)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Prescripteur : " />
 							</hlayout>
 							<vlayout>
@@ -161,7 +173,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.nomEnfant)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Nom enfant : " />
 							</hlayout>
 							<vlayout>
@@ -171,7 +183,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.prolongation)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Prolongation : " />
 							</hlayout>
 							<vlayout>
@@ -182,7 +194,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.nombreITT)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Nombre ITT : " />
 							</hlayout>
 							<vlayout>
@@ -193,7 +205,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.siegeLesion)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Siège des lésions : " />
 							</hlayout>
 							<vlayout>
@@ -210,7 +222,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisi.atReference)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label
 									value="Accident de travail de référence : " />
 							</hlayout>
@@ -226,7 +238,7 @@
 							</vlayout>
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Commentaire : " />
 							</hlayout>
 							<vlayout>
@@ -238,7 +250,7 @@
 						</hlayout>
 
 						<hlayout>
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Pièces jointes : " />
 								<image tooltiptext="@bind(vm.demandeCourant.typeSaisi.infosPieceJointe)" sclass="ListAction help" visible="@bind(not empty vm.demandeCourant.typeSaisi.infosPieceJointe)" />
 							</hlayout>
@@ -277,7 +289,7 @@
 						visible="@bind(not empty vm.demandeCourant.typeSaisiCongeAnnuel)">
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisiCongeAnnuel.calendarDateDebut)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Date de début : " />
 							</hlayout>
 							<hlayout>
@@ -297,7 +309,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisiCongeAnnuel.calendarDateFin)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Date de fin : " />
 							</hlayout>
 							<hlayout>
@@ -317,7 +329,7 @@
 						</hlayout>
 						<hlayout
 							visible="@bind(vm.demandeCourant.typeSaisiCongeAnnuel.calendarDateReprise)">
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Date de reprise : " />
 							</hlayout>
 							<hlayout>
@@ -327,7 +339,7 @@
 							</hlayout>
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Durée : " />
 							</hlayout>
 							<hlayout>
@@ -343,7 +355,7 @@
 								onClick="@command('forcerSaisieDuree')" />
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Commentaire : " />
 							</hlayout>
 							<vlayout>
@@ -354,7 +366,7 @@
 							</vlayout>
 						</hlayout>
 						<hlayout>
-							<hlayout width="150px">
+							<hlayout width="155px">
 								<label value="Pièces jointes : " />
 							</hlayout>
 							<vlayout>
@@ -389,7 +401,7 @@
 					</vlayout>
 					<!-- FIN POUR LES CONGES ANNUELS -->
 					<hlayout>
-						<hlayout width="150px">
+						<hlayout width="155px">
 							<label value="Etat de la demande : " />
 						</hlayout>
 						<hlayout>

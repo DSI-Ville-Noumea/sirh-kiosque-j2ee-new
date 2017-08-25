@@ -69,6 +69,7 @@ public class RefTypeSaisiDto implements Serializable {
 	private boolean siegeLesion;
 	private boolean atReference;
 	private boolean maladiePro;
+	private boolean dateAccidentTravail;
 	
 	public RefTypeSaisiDto() {
 	}
@@ -319,6 +320,14 @@ public class RefTypeSaisiDto implements Serializable {
 
 	public void setMotif(boolean motif) {
 		this.motif = motif;
+	}
+
+	public boolean isDateAccidentTravail() {
+		return dateAccidentTravail;
+	}
+
+	public void setDateAccidentTravail(boolean dateAccidentTravail) {
+		this.dateAccidentTravail = dateAccidentTravail;
 	}
 	
 }
