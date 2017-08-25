@@ -61,7 +61,7 @@
         </div>
     </hlayout>
     <div sclass="blockSeparator"/>
-    <label sclass="RHTitle3" value="MISSION"/>
+    <label sclass="RHTitle3" value="DÉFINITION DE POSTE"/>
     <div sclass="bleu" width="100%">
         <label value="@bind(vm.fichePostePrimaire.missions)"/>
     </div>
