@@ -61,9 +61,19 @@
         </div>
     </hlayout>
     <div sclass="blockSeparator"/>
-    <label sclass="RHTitle3" value="DÉFINITION DE POSTE"/>
+    <label sclass="RHTitle3" value="DESCRIPTIF DE POSTE"/>
     <div sclass="bleu" width="100%">
         <label value="@bind(vm.fichePostePrimaire.missions)"/>
+    </div>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="SPÉCIALISATION ÉVENTUELLE"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.sirhWsFichePostePrimaire.specialisation)"/>
+    </div>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="INFORMATIONS COMPLÉMENTAIRES"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.sirhWsFichePostePrimaire.informationsComplementaires)"/>
     </div>
     <div sclass="blockSeparator"/>
     <label sclass="RHTitle3" value="LIEN HIERARCHIQUE"/>
