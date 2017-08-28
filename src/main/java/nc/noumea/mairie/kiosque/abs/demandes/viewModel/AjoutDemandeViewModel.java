@@ -621,11 +621,25 @@ public class AjoutDemandeViewModel {
 					vList.add(new ValidationMessage("La date de l'accident du travail est obligatoire."));
 				}
 			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
+				}
+			}
 		} else if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto() != null) {
 			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
 					vList.add(new ValidationMessage(
 							"Merci de choisir M/A pour la date de début."));
+				}
+			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
 				}
 			}
 
