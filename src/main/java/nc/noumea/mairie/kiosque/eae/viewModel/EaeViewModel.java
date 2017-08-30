@@ -277,14 +277,14 @@ public class EaeViewModel {
 		List<EaeFichePosteDto> listeFDP = eaeWsConsumer.getListeFichePosteEae(getEaeCourant().getIdEae(), currentUser.getAgent().getIdAgent());
 		setListeFichePoste(listeFDP);
 		if (getListeFichePoste().size() == 1) {
-			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getListeFichePoste().get(0).getIdAgentShd());
+			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getEaeCourant().getAgentEvalue().getIdAgent());
 			setSirhWsFichePostePrimaire(fpPrimaire);
 			setFichePostePrimaire(getListeFichePoste().get(0));
 		} else if (getListeFichePoste().size() == 2) {
-			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getListeFichePoste().get(0).getIdAgentShd());
+			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getEaeCourant().getAgentEvalue().getIdAgent());
 			setSirhWsFichePostePrimaire(fpPrimaire);
 			setFichePostePrimaire(getListeFichePoste().get(0));
-			FichePosteDto fpSecondaire = sirhWsConsumer.getFichePoste(getListeFichePoste().get(1).getIdAgentShd());
+			FichePosteDto fpSecondaire = sirhWsConsumer.getFichePosteSecondaire(getEaeCourant().getAgentEvalue().getIdAgent());
 			setSirhWsFichePosteSecondaire(fpSecondaire);
 			setFichePosteSecondaire(getListeFichePoste().get(1));
 		}
