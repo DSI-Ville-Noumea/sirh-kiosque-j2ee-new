@@ -104,7 +104,7 @@
                 <div sclass="RHTitle2Line"/>
                 <separator/>
                 <separator/>
-                <div class="RHTitle3">Mission(s)</div>
+                <div class="RHTitle3">Définition de poste</div>
                 <div sclass="RHContent">
                     <label style="color:black;"
                            value="${each.missions}"/>
