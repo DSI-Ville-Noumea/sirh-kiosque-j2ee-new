@@ -62,7 +62,7 @@
                                 <label sclass="name"
                                        value="Management"/>
                                 <label sclass="value"
-                                       value="@bind(each.niveauManagement)"/>
+                                       value="${each.niveauManagement}"/>
                             </div>
                         </div>
                         <separator/>
