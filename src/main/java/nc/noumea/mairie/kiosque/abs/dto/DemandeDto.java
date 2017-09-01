@@ -116,6 +116,7 @@ public class DemandeDto implements Comparable<DemandeDto>, Serializable  {
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@JsonDeserialize(using = JsonDateDeserializer.class)
 	private Date dateAccidentTravail;
+	private boolean sansArretTravail;
 	private boolean prolongation;
 	private RefTypeDto typeAccidentTravail;
 	private RefTypeDto typeSiegeLesion;
@@ -542,6 +543,14 @@ public class DemandeDto implements Comparable<DemandeDto>, Serializable  {
 
 	public void setPiecesJointes(List<PieceJointeDto> piecesJointes) {
 		this.piecesJointes = piecesJointes;
+	}
+
+	public boolean isSansArretTravail() {
+		return sansArretTravail;
+	}
+
+	public void setSansArretTravail(boolean sansArretTravail) {
+		this.sansArretTravail = sansArretTravail;
 	}
 
 	@Override

@@ -589,8 +589,8 @@ public class ModifierDemandeViewModel {
 		
 		String result = "";
 		
-		if(null != demandeAT.getDateDeclaration()) {
-			result += sdfddMMyyyy.format(demandeAT.getDateDeclaration()) + " - ";
+		if(null != demandeAT.getDateAccidentTravail()) {
+			result += sdfddMMyyyy.format(demandeAT.getDateAccidentTravail()) + " - ";
 		}
 		if(null != demandeAT.getTypeSiegeLesion()) {
 			result += demandeAT.getTypeSiegeLesion().getLibelle();

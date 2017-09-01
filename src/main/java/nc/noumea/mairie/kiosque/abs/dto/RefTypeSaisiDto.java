@@ -70,6 +70,7 @@ public class RefTypeSaisiDto implements Serializable {
 	private boolean atReference;
 	private boolean maladiePro;
 	private boolean dateAccidentTravail;
+	private boolean sansArretTravail;
 	
 	public RefTypeSaisiDto() {
 	}
@@ -328,6 +329,14 @@ public class RefTypeSaisiDto implements Serializable {
 
 	public void setDateAccidentTravail(boolean dateAccidentTravail) {
 		this.dateAccidentTravail = dateAccidentTravail;
+	}
+
+	public boolean isSansArretTravail() {
+		return sansArretTravail;
+	}
+
+	public void setSansArretTravail(boolean sansArretTravail) {
+		this.sansArretTravail = sansArretTravail;
 	}
 	
 }

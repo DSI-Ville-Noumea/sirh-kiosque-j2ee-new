@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -52,6 +53,7 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zk.ui.ext.Native.Helper;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Window;
@@ -367,6 +369,12 @@ public class AjoutDemandeViewModel {
 				&& (getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.ACCIDENT_TRAVAIL.getValue()) || getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.RECHUTE_AT.getValue())) ) {
 			Long nbITT = null;
 		    
+			// #41504 : Si la case "Sans arrêt de travail" est cochée, alors le nombre d'ITT doit être 0
+			if (getDemandeCreation().isSansArretTravail()) {
+				getDemandeCreation().setNombreITT(0d);
+				return;
+			}
+			
 			switch (RefTypeAbsenceEnum.getRefTypeAbsenceEnum(getTypeAbsenceCourant().getIdRefTypeAbsence())) {
 				case ACCIDENT_TRAVAIL :
 					nbITT = ChronoUnit.DAYS.between(getDemandeCreation().getDateDebut().toInstant(), getDemandeCreation().getDateFin().toInstant());
@@ -942,8 +950,8 @@ public class AjoutDemandeViewModel {
 
 		String result = "";
 
-		if (null != demandeAT.getDateDeclaration()) {
-			result += sdfddMMyyyy.format(demandeAT.getDateDeclaration()) + " - ";
+		if (null != demandeAT.getDateAccidentTravail()) {
+			result += sdfddMMyyyy.format(demandeAT.getDateAccidentTravail()) + " - ";
 		}
 		if (null != demandeAT.getTypeSiegeLesion()) {
 			result += demandeAT.getTypeSiegeLesion().getLibelle();
