@@ -518,6 +518,13 @@ public class ModifierDemandeViewModel {
 					vList.add(new ValidationMessage("La date de l'accident du travail est obligatoire."));
 				}
 			}
+
+			// Date de déclaration
+			if (getDemandeCourant().getTypeSaisi().isDateDeclaration()) {
+				if (getDemandeCourant().getDateDeclaration() == null) {
+					vList.add(new ValidationMessage("La date de déclaration est obligatoire."));
+				}
+			}
 		} else if (getDemandeCourant().getTypeSaisiCongeAnnuel() != null) {
 			if (getDemandeCourant().getTypeSaisiCongeAnnuel().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
