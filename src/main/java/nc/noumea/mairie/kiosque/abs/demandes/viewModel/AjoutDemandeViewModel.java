@@ -630,6 +630,13 @@ public class AjoutDemandeViewModel {
 				}
 			}
 
+			// Date de déclaration
+			if (refTypeAbsenceDto.getTypeSaisiDto().isDateDeclaration()) {
+				if (getDemandeCreation().getDateDeclaration() == null) {
+					vList.add(new ValidationMessage("La date de déclaration est obligatoire."));
+				}
+			}
+
 			// Pièce jointe
 			if (refTypeAbsenceDto.getTypeSaisiDto().isPieceJointe()) {
 				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
