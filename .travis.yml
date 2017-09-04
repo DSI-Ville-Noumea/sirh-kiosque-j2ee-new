@@ -16,8 +16,7 @@ before_install:
 - mvn install:install-file -DgroupId=com.javaplanner -DartifactId=javaplanner -Dversion=1.5 -Dfile=./lib/javaplanner-1.5.jar -Dpackaging=jar -DgeneratePom=true
 - export TZ=Pacific/Noumea
 - git clone -b travis `git config --get remote.origin.url` target/travis
-install: mvn install -DSkipTests=true -Dmaven.javadoc.skip=true -DcreateChecksum=true
-  --settings target/travis/settings.xml
+install: mvn install -DSkipTests=true -Dmaven.javadoc.skip=true -DcreateChecksum=true --settings target/travis/settings.xml
 script:
 - mvn versioneye:update test jacoco:report
 after_success:
