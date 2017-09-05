@@ -61,11 +61,22 @@
         </div>
     </hlayout>
     <div sclass="blockSeparator"/>
-    <label sclass="RHTitle3" value="DESCRIPTIF DE POSTE"/>
+    <label sclass="RHTitle3" value="DEFINITION DU POSTE"/>
     <div sclass="bleu" width="100%">
         <label value="@bind(vm.fichePostePrimaire.missions)"/>
+        <separator if="${!empty vm.sirhWsFichePostePrimaire.definitionManagement}" />
+        <label value="@bind(vm.sirhWsFichePostePrimaire.definitionManagement)" if="${!empty vm.sirhWsFichePostePrimaire.definitionManagement}"></label>
     </div>
     <div sclass="blockSeparator"/>
+    <div if='${vm.sirhWsFichePostePrimaire.niveauManagement != "" and vm.sirhWsFichePostePrimaire.niveauManagement.toLowerCase() != "aucun"}'>
+        <label sclass="RHTitle3" value="COMPETENCES MANAGERIALES"/>
+        <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
+            <zk forEach="${vm.sirhWsFichePostePrimaire.competenceManagement}">
+                <label sclass="value" value="* ${each}"/>
+            </zk>
+        </vlayout>
+        <div sclass="blockSeparator"/>
+    </div>
     <label sclass="RHTitle3" value="SPÉCIALISATION ÉVENTUELLE"/>
     <div sclass="bleu" width="100%">
         <label value="@bind(vm.sirhWsFichePostePrimaire.specialisation)"/>
@@ -105,21 +116,21 @@
     <label sclass="RHTitle3" value="SAVOIRS"/>
     <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
         <zk forEach="${vm.sirhWsFichePostePrimaire.savoirFaireMetier}">
-            <label sclass="value" value="${each}"/>
+            <label sclass="value" value="* ${each}"/>
         </zk>
     </vlayout>
     <div sclass="blockSeparator"/>
     <label sclass="RHTitle3" value="ACTIVITÉS ET COMPÉTENCES GÉNÉRALES"/>
     <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
         <zk forEach="${vm.sirhWsFichePostePrimaire.activiteGenerale}">
-            <label sclass="value" value="${each}"/>
+            <label sclass="value" value="* ${each}"/>
         </zk>
     </vlayout>
     <div sclass="blockSeparator"/>
     <label sclass="RHTitle3" value="CONDITIONS D'EXERCICE"/>
     <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
         <zk forEach="${vm.sirhWsFichePostePrimaire.conditionExercice}">
-            <label sclass="value" value="${each}"/>
+            <label sclass="value" value="* ${each}"/>
         </zk>
     </vlayout>
     <div sclass="blockSeparator"/>

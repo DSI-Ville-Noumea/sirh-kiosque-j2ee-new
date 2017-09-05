@@ -93,14 +93,33 @@
             <div sclass="RHTitle2Line" />
             <separator />
             <separator />
-            <div class="RHTitle3">Descriptif de poste</div>
+            <div class="RHTitle3">Définition du poste</div>
             <div sclass="RHContent">
-                <label
-                        value="@bind(fiche.missions)" />
+                <label value="@bind(fiche.missions)" />
+                <separator if="${!empty vm.ficheCourant.definitionManagement}" />
+                <label value="@bind(fiche.definitionManagement)" if="${!empty vm.ficheCourant.definitionManagement}"></label>
             </div>
             <div sclass="RHTitle2Line" />
-            <separator />
-            <separator />
+            <div if='${vm.ficheCourant.niveauManagement != "" and vm.ficheCourant.niveauManagement.toLowerCase() != "aucun"}'>
+                <separator />
+                <separator />
+                <div class="RHTitle3">
+                    Compétences managériales
+                </div>
+                <div sclass="RHContent">
+                    <zk
+                            forEach="${vm.ficheCourant.competenceManagement}">
+                        <div>
+                            <space bar="false"/>
+                            <label sclass="value"
+                                   value="* ${each}" />
+                        </div>
+                    </zk>
+                </div>
+                <div sclass="RHTitle2Line" />
+                <separator />
+                <separator />
+            </div>
             <div class="RHTitle3">Spécialisation éventuelle</div>
             <div sclass="RHContent">
                 <label
@@ -150,7 +169,7 @@
                     <div>
                         <space bar="false"/>
                         <label sclass="value"
-                               value="${each}" />
+                               value="* ${each}" />
                     </div>
                 </zk>
             </div>
@@ -166,7 +185,7 @@
                     <div>
                         <space bar="false"/>
                         <label sclass="value"
-                               value="${each}" />
+                               value="* ${each}" />
                     </div>
                 </zk>
             </div>
@@ -182,7 +201,7 @@
                     <div>
                         <space bar="false"/>
                         <label sclass="value"
-                               value="${each}" />
+                               value="* ${each}" />
                     </div>
                 </zk>
             </div>

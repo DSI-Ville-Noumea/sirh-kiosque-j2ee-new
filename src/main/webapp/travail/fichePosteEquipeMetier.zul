@@ -106,12 +106,29 @@
                 <separator/>
                 <div class="RHTitle3">Définition de poste</div>
                 <div sclass="RHContent">
-                    <label style="color:black;"
-                           value="${each.missions}"/>
+                    <label style="color:black;" value="${each.missions}"/>
+                    <separator if="${!empty each.definitionManagement}" />
+                    <label style="color:black;" value="${each.definitionManagement}" if="${!empty each.definitionManagement}"></label>
                 </div>
                 <div sclass="RHTitle2Line"/>
-                <separator/>
-                <separator/>
+                <div if='${each.niveauManagement != "" and each.niveauManagement.toLowerCase() != "aucun"}'>
+                    <separator />
+                    <separator />
+                    <div class="RHTitle3">
+                        Compétences managériales
+                    </div>
+                    <div sclass="RHContent">
+                        <zk
+                                forEach="${each.competenceManagement}">
+                            <div>
+                                <label sclass="value" value="* ${each}" />
+                            </div>
+                        </zk>
+                    </div>
+                    <div sclass="RHTitle2Line" />
+                    <separator />
+                    <separator />
+                </div>
                 <div class="RHTitle3">Spécialisation éventuelle</div>
                 <div sclass="RHContent">
                     <label
@@ -122,8 +139,7 @@
                 <separator/>
                 <div class="RHTitle3">Informations complémentaires</div>
                 <div sclass="RHContent">
-                    <label
-                            value="${each.informationsComplementaires}"/>
+                    <label value="${each.informationsComplementaires}"/>
                 </div>
                 <div sclass="RHTitle2Line"/>
                 <separator/>
@@ -140,7 +156,6 @@
                             <zk
                                     forEach="${each.value}">
                                 <div>
-                                    <space bar="false"/>
                                     <label sclass="value"
                                            value=" * ${each}"/>
                                 </div>
@@ -159,9 +174,8 @@
                     <zk
                             forEach="${each.savoirFaireMetier}">
                         <div>
-                            <space bar="false"/>
                             <label sclass="value"
-                                   value="${each}"/>
+                                   value="* ${each}"/>
                         </div>
                     </zk>
                 </div>
@@ -175,9 +189,8 @@
                     <zk
                             forEach="${each.activiteGenerale}">
                         <div>
-                            <space bar="false"/>
                             <label sclass="value"
-                                   value="${each}"/>
+                                   value="* ${each}"/>
                         </div>
                     </zk>
                 </div>
@@ -191,9 +204,8 @@
                     <zk
                             forEach="${each.conditionExercice}">
                         <div>
-                            <space bar="false"/>
                             <label sclass="value"
-                                   value="${each}"/>
+                                   value="* ${each}"/>
                         </div>
                     </zk>
                 </div>

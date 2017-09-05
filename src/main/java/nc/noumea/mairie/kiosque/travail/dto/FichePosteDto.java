@@ -86,12 +86,14 @@ public class FichePosteDto {
 	private String specialisation;
 	private String informationsComplementaires;
 	private Integer idNiveauManagement;
+	private String definitionManagement;
 	private String niveauManagement;
 
 	private List<ActiviteMetierSavoirFaire> activiteMetier = new ArrayList<>();
 	private List<String> savoirFaireMetier = new ArrayList<>();
 	private List<String> activiteGenerale = new ArrayList<>();
 	private List<String> conditionExercice = new ArrayList<>();
+	private List<String> competenceManagement = new ArrayList<>();
 
 	public String getNumero() {
 		return numero;
@@ -461,6 +463,14 @@ public class FichePosteDto {
 		this.idNiveauManagement = idNiveauManagement;
 	}
 
+	public String getDefinitionManagement() {
+		return definitionManagement;
+	}
+
+	public void setDefinitionManagement(String definitionManagement) {
+		this.definitionManagement = definitionManagement;
+	}
+
 	public List<ActiviteMetierSavoirFaire> getActiviteMetier() {
 		return activiteMetier;
 	}
@@ -507,6 +517,14 @@ public class FichePosteDto {
 
 	public void setConditionExercice(List<String> conditionExercice) {
 		this.conditionExercice = conditionExercice;
+	}
+
+	public List<String> getCompetenceManagement() {
+		return competenceManagement;
+	}
+
+	public void setCompetenceManagement(List<String> competenceManagement) {
+		this.competenceManagement = competenceManagement;
 	}
 
 	private static class ActiviteMetierSavoirFaire {
