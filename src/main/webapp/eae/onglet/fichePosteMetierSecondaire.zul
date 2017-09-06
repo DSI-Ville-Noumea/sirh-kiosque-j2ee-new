@@ -8,7 +8,7 @@
             <label value="Intitulé du poste"/>
         </div>
         <div sclass="bleu">
-            <label value="@bind(vm.fichePosteSecondaire.intitule)"/>
+            <label value="@bind(vm.sirhWsFichePosteSecondaire.titre)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -16,15 +16,7 @@
             <label value="Grade"/>
         </div>
         <div sclass="bleu">
-            <label value="@bind(vm.fichePosteSecondaire.grade)"/>
-        </div>
-    </hlayout>
-    <hlayout>
-        <div sclass="espace">
-            <label value="Emploi"/>
-        </div>
-        <div sclass="bleu">
-            <label value="@bind(vm.fichePosteSecondaire.emploi)"/>
+            <label value="@bind(vm.sirhWsFichePosteSecondaire.gradePoste)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -41,7 +33,7 @@
         </div>
         <div sclass="bleu">
             <label
-                    value="@bind(vm.fichePosteSecondaire.directionService)"/>
+                    value="@bind(vm.sirhWsFichePosteSecondaire.service)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -50,7 +42,7 @@
         </div>
         <div sclass="bleu">
             <label
-                    value="@bind(vm.fichePosteSecondaire.localisation)"/>
+                    value="@bind(vm.sirhWsFichePosteSecondaire.lieu)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -65,12 +57,12 @@
     <div sclass="blockSeparator"/>
     <label sclass="RHTitle3" value="DEFINITION DU POSTE"/>
     <div sclass="bleu" width="100%">
-        <label value="@bind(vm.fichePosteSecondaire.missions)"/>
-        <separator if="${!empty vm.fichePosteSecondaire.definitionManagement}" />
-        <label value="@bind(vm.fichePosteSecondaire.definitionManagement)" if="${!empty vm.fichePosteSecondaire.definitionManagement}"></label>
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.missions)"/>
+        <separator if="${!empty vm.sirhWsFichePosteSecondaire.definitionManagement}" />
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.definitionManagement)" if="${!empty vm.sirhWsFichePosteSecondaire.definitionManagement}"></label>
     </div>
     <div sclass="blockSeparator"/>
-    <div if='${vm.ficheSecondaireCourant.niveauManagement != "" and vm.ficheSecondaireCourant.niveauManagement.toLowerCase() != "aucun"}'>
+    <div if='${vm.sirhWsFichePosteSecondaire.niveauManagement != "" and vm.sirhWsFichePosteSecondaire.niveauManagement.toLowerCase() != "aucun"}'>
         <separator />
         <separator />
         <div class="RHTitle3">
@@ -78,7 +70,7 @@
         </div>
         <div sclass="RHContent">
             <zk
-                    forEach="${vm.ficheSecondaireCourant.competenceManagement}">
+                    forEach="${vm.sirhWsFichePosteSecondaire.competenceManagement}">
                 <div>
                     <space bar="false"/>
                     <label sclass="value"

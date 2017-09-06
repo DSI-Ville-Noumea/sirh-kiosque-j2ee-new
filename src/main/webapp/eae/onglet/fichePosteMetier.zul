@@ -6,7 +6,7 @@
             <label value="Intitulé du poste"/>
         </div>
         <div sclass="bleu">
-            <label value="@bind(vm.fichePostePrimaire.intitule)"/>
+            <label value="@bind(vm.sirhWsFichePostePrimaire.titre)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -14,15 +14,7 @@
             <label value="Grade"/>
         </div>
         <div sclass="bleu">
-            <label value="@bind(vm.fichePostePrimaire.grade)"/>
-        </div>
-    </hlayout>
-    <hlayout>
-        <div sclass="espace">
-            <label value="Emploi"/>
-        </div>
-        <div sclass="bleu">
-            <label value="@bind(vm.fichePostePrimaire.emploi)"/>
+            <label value="@bind(vm.sirhWsFichePostePrimaire.gradePoste)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -39,7 +31,7 @@
         </div>
         <div sclass="bleu">
             <label
-                    value="@bind(vm.fichePostePrimaire.directionService)"/>
+                    value="@bind(vm.sirhWsFichePostePrimaire.service)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -48,7 +40,7 @@
         </div>
         <div sclass="bleu">
             <label
-                    value="@bind(vm.fichePostePrimaire.localisation)"/>
+                    value="@bind(vm.sirhWsFichePostePrimaire.lieu)"/>
         </div>
     </hlayout>
     <hlayout>
@@ -63,7 +55,7 @@
     <div sclass="blockSeparator"/>
     <label sclass="RHTitle3" value="DEFINITION DU POSTE"/>
     <div sclass="bleu" width="100%">
-        <label value="@bind(vm.fichePostePrimaire.missions)"/>
+        <label value="@bind(vm.sirhWsFichePostePrimaire.missions)"/>
         <separator if="${!empty vm.sirhWsFichePostePrimaire.definitionManagement}" />
         <label value="@bind(vm.sirhWsFichePostePrimaire.definitionManagement)" if="${!empty vm.sirhWsFichePostePrimaire.definitionManagement}"></label>
     </div>
@@ -94,8 +86,7 @@
                     value="Fonction et nom du responsable hiérarchique direct"/>
         </div>
         <div sclass="bleu">
-            <label
-                    value="@bind(vm.getInfoResponsable(vm.fichePostePrimaire))"/>
+            <label value="@bind(vm.getInfoResponsable(vm.fichePostePrimaire))"/>
         </div>
     </hlayout>
     <div sclass="blockSeparator"/>
