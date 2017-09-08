@@ -1,4 +1,5 @@
 language: java
+sudo: required
 jdk:
 - oraclejdk8
 cache:
@@ -16,8 +17,7 @@ before_install:
 - mvn install:install-file -DgroupId=com.javaplanner -DartifactId=javaplanner -Dversion=1.5 -Dfile=./lib/javaplanner-1.5.jar -Dpackaging=jar -DgeneratePom=true
 - export TZ=Pacific/Noumea
 - git clone -b travis `git config --get remote.origin.url` target/travis
-install: mvn install -DSkipTests=true -Dmaven.javadoc.skip=true -DcreateChecksum=true
-  --settings target/travis/settings.xml
+install: mvn install -DSkipTests=true -Dmaven.javadoc.skip=true -DcreateChecksum=true --settings target/travis/settings.xml
 script:
 - mvn versioneye:update test jacoco:report
 after_success:
@@ -30,6 +30,7 @@ before_deploy:
   to GitHub releases"
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: l3eMBQvWIyRjgn1Y2Z5hzcylPn9vJG0cQUGmfbpvMZCMD0RgV9V5ZjsEAMc5ZtYp/H1HlcfdNVc5sHjlaxQ+5rwmHhTWNow/pOXyBjtbdqEdsL2CdTQcxf74Zj3uJZMFNlKi5eSCSHDd2qfeZoTQTc3M6iq71SFUD0N5vnl+6sTxenVPy27x9AHf4c7hAiBJivHLDKB+Vsol+ARuSvEMPMyVPEEbGhona8a9J+xVkA5Ur+SfmkmgJttWPmImjOIIq6eVhBdjBnMonaWbhrscfKvSHZEPgj+eo2ZK2o/MxDp3uhwk6CxQZxm+a2ss9PvV1nQ9+pCiMqu1ZabogeZ3b0J+8YfO2LT7KYJEWIcFRK+fwC/ZLPCrKhnsDFP4YTTcD6Fp9NkGj0j+H6+0RYi0My871rZfqS96EHpEw7cLkPwtnbh4/YBmeA5yDQ5mR3F+iW2f70OhuqJC+MAitnfgXPKzEI7cti9zcEduttQZBK8u061KnbDtsz/aZLMDapXxMQKvYogkTRaDPNqZ11syvRuKFkzNINFQ8QV+wBpSDqmujozLrF350PtueDfVNAOH7/ple3HQBalKenNjpU900B+U6ZAF2H4Q+DaTUJr5PasndryXvKeMGVi71+RVx+O/KXKclUvh8KjiEQGoGoXYWzNlW3q04QvJo4PDteAn974=
   file:

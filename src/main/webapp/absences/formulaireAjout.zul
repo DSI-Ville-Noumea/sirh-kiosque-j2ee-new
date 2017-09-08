@@ -176,6 +176,17 @@
 					</vlayout>
 				</hlayout>
 				<hlayout
+					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.sansArretTravail)">
+					<hlayout width="155px">
+						<label value="Sans arrêt de travail : " />
+					</hlayout>
+					<vlayout>
+						<checkbox
+							checked="@bind(vm.demandeCreation.sansArretTravail)"
+							onCheck="@command('refreshNombreITT')" />
+					</vlayout>
+				</hlayout>
+				<hlayout
 					visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.nombreITT)">
 					<hlayout width="155px">
 						<label value="Nombre ITT : " />

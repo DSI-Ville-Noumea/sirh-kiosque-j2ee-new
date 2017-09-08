@@ -145,7 +145,7 @@
 							<hlayout>
 								<datebox
 									visible="@bind(vm.demandeCourant.typeSaisi.dateAccidentTravail)"
-									cols="14" format="dd/MM/yyyy" maxlength="10"
+									cols="14" format="dd/MM/yyyy" maxlength="10" disabled="true"
 									value="@bind(vm.demandeCourant.dateAccidentTravail)" />
 							</hlayout>
 						</hlayout>
@@ -190,6 +190,16 @@
 								<checkbox
 									checked="@bind(vm.demandeCourant.prolongation)"
 									label="Prolongation" />
+							</vlayout>
+						</hlayout>
+						<hlayout
+							visible="@bind(vm.demandeCourant.typeSaisi.sansArretTravail)">
+							<hlayout width="155px">
+								<label value="Sans arrêt de travail : " />
+							</hlayout>
+							<vlayout>
+								<checkbox
+									checked="@bind(vm.demandeCourant.sansArretTravail)" />
 							</vlayout>
 						</hlayout>
 						<hlayout

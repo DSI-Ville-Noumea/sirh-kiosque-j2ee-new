@@ -472,10 +472,24 @@ public class AjoutDemandeAgentViewModel {
 					vList.add(new ValidationMessage("Le prescripteur est obligatoire."));
 				}
 			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
+				}
+			}
 		} else if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto() != null) {
 			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
 					vList.add(new ValidationMessage("Merci de choisir M/A pour la date de début."));
+				}
+			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
 				}
 			}
 
@@ -522,8 +536,8 @@ public class AjoutDemandeAgentViewModel {
 		
 		String result = "";
 		
-		if(null != demandeAT.getDateDeclaration()) {
-			result += sdfddMMyyyy.format(demandeAT.getDateDeclaration()) + " - ";
+		if(null != demandeAT.getDateAccidentTravail()) {
+			result += sdfddMMyyyy.format(demandeAT.getDateAccidentTravail()) + " - ";
 		}
 		if(null != demandeAT.getTypeSiegeLesion()) {
 			result += demandeAT.getTypeSiegeLesion().getLibelle();
