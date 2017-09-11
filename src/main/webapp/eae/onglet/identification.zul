@@ -243,6 +243,14 @@
 							</hlayout>
 							<hlayout>
 								<div sclass="espace">
+									<label value="Mode d'accès à l'échelon actuel" />
+								</div>
+								<div sclass="bleu">
+									<label value="@bind(vm.identification.statut.modeAcces)" />
+								</div>
+							</hlayout>
+							<hlayout>
+								<div sclass="espace">
 									<label value="Catégorie" />
 								</div>
 								<div sclass="bleu">

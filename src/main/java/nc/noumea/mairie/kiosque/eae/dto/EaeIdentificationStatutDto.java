@@ -46,6 +46,7 @@ public class EaeIdentificationStatutDto {
 	private String	nouvGrade;
 	private String	nouvEchelon;
 	private String	statutPrecision;
+	private String	modeAcces;
 
 	private String	statut;
 
@@ -135,5 +136,13 @@ public class EaeIdentificationStatutDto {
 
 	public void setStatut(String statut) {
 		this.statut = statut;
+	}
+
+	public String getModeAcces() {
+		return modeAcces;
+	}
+
+	public void setModeAcces(String modeAcces) {
+		this.modeAcces = modeAcces;
 	}
 }
