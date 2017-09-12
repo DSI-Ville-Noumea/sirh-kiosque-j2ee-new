@@ -36,7 +36,10 @@ public class EaeEvaluationDto {
 	private Double				noteAnneeN3;
 	private Boolean				avisRevalorisation;
 	private Boolean				avisChangementClasse;
+	private String				avisChangementCorps;
+	private String				avisChangementGrade;
 	private EaeListeDto			propositionAvancement;
+	private EaeListeDto			avisDirecteur;
 	private int					anneeAvancement;
 	private EaeCommentaireDto	commentaireAvctEvaluateur	= new EaeCommentaireDto();
 	private EaeCommentaireDto	commentaireAvctEvalue		= new EaeCommentaireDto();
@@ -196,5 +199,29 @@ public class EaeEvaluationDto {
 
 	public void setAvisShd(String avisShd) {
 		this.avisShd = avisShd;
+	}
+
+	public String getAvisChangementCorps() {
+		return avisChangementCorps;
+	}
+
+	public void setAvisChangementCorps(String avisChangementCorps) {
+		this.avisChangementCorps = avisChangementCorps;
+	}
+
+	public String getAvisChangementGrade() {
+		return avisChangementGrade;
+	}
+
+	public void setAvisChangementGrade(String avisChangementGrade) {
+		this.avisChangementGrade = avisChangementGrade;
+	}
+
+	public EaeListeDto getAvisDirecteur() {
+		return avisDirecteur;
+	}
+
+	public void setAvisDirecteur(EaeListeDto avisDirecteur) {
+		this.avisDirecteur = avisDirecteur;
 	}
 }

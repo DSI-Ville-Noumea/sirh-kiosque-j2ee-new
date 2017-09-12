@@ -1329,6 +1329,16 @@ public class EaeViewModel {
 		return false;
 	}
 
+	public boolean isChangementCorps(String typeAvct) {
+		// TODO
+		return true;
+	}
+
+	public boolean isChangementGrade(String typeAvct) {
+		// TODO
+		return true;
+	}
+
 	public boolean isRevalorisation(String typeAvct) {
 		if (typeAvct != null && typeAvct.equals("REVA")) {
 			return true;
