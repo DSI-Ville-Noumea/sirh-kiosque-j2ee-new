@@ -21,7 +21,7 @@
 			<listbox model="@bind(vm.tableauBord)">
 				<listhead>
 					<listheader label="" sort="none" />
-					<listheader align="center" label="Non affecté"
+					<listheader align="center" label="Sans évaluateur"
 						sort="none" />
 					<listheader align="center" label="Non débuté"
 						sort="none" />
