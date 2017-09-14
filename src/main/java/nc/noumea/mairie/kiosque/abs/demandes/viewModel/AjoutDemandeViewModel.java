@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -52,6 +53,7 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zk.ui.ext.Native.Helper;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Window;
@@ -367,6 +369,12 @@ public class AjoutDemandeViewModel {
 				&& (getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.ACCIDENT_TRAVAIL.getValue()) || getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.RECHUTE_AT.getValue())) ) {
 			Long nbITT = null;
 		    
+			// #41504 : Si la case "Sans arrêt de travail" est cochée, alors le nombre d'ITT doit être 0
+			if (getDemandeCreation().isSansArretTravail()) {
+				getDemandeCreation().setNombreITT(0d);
+				return;
+			}
+			
 			switch (RefTypeAbsenceEnum.getRefTypeAbsenceEnum(getTypeAbsenceCourant().getIdRefTypeAbsence())) {
 				case ACCIDENT_TRAVAIL :
 					nbITT = ChronoUnit.DAYS.between(getDemandeCreation().getDateDebut().toInstant(), getDemandeCreation().getDateFin().toInstant());
@@ -614,11 +622,39 @@ public class AjoutDemandeViewModel {
 					vList.add(new ValidationMessage("Le prescripteur est obligatoire."));
 				}
 			}
+
+			// Date de l'accident du travail
+			if (refTypeAbsenceDto.getTypeSaisiDto().isDateAccidentTravail()) {
+				if (getDemandeCreation().getDateAccidentTravail() == null) {
+					vList.add(new ValidationMessage("La date de l'accident du travail est obligatoire."));
+				}
+			}
+
+			// Date de déclaration
+			if (refTypeAbsenceDto.getTypeSaisiDto().isDateDeclaration()) {
+				if (getDemandeCreation().getDateDeclaration() == null) {
+					vList.add(new ValidationMessage("La date de déclaration est obligatoire."));
+				}
+			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
+				}
+			}
 		} else if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto() != null) {
 			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
 					vList.add(new ValidationMessage(
 							"Merci de choisir M/A pour la date de début."));
+				}
+			}
+
+			// Pièce jointe
+			if (refTypeAbsenceDto.getTypeSaisiCongeAnnuelDto().isPieceJointe()) {
+				if (getDemandeCreation().getPiecesJointes() == null || getDemandeCreation().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
 				}
 			}
 
@@ -921,8 +957,8 @@ public class AjoutDemandeViewModel {
 
 		String result = "";
 
-		if (null != demandeAT.getDateDeclaration()) {
-			result += sdfddMMyyyy.format(demandeAT.getDateDeclaration()) + " - ";
+		if (null != demandeAT.getDateAccidentTravail()) {
+			result += sdfddMMyyyy.format(demandeAT.getDateAccidentTravail()) + " - ";
 		}
 		if (null != demandeAT.getTypeSiegeLesion()) {
 			result += demandeAT.getTypeSiegeLesion().getLibelle();
