@@ -151,24 +151,6 @@
 		<separator />
 		<div sclass="blockSeparator" />
 		<separator />
-			
-		<!-- TODO : Vérifier les règles d'affichage et de modification ! -->
-<!-- 			Durée du directeur -->
-			<vlayout>
-				<label value="Le directeur sollicite un avancement d'échelon à la " />
-				<div align="center">
-					<radiogroup orient="horizontal" selectedItem="@bind(vm.evaluation.avisDirecteur.courant)">
-						<hlayout>
-							<zk forEach="${vm.evaluation.avisDirecteur.liste}">
-								<div sclass="bleu">
-									<radio disabled="@bind(not vm.modification)" label="${each.valeur}" value="${each.code}" />
-								</div>
-							</zk>
-						</hlayout>
-					</radiogroup>
-				</div>
-			</vlayout>
-			<separator />
 		<vlayout
 			visible="@bind(vm.isAfficherTitreFonctionnaireEvaluation(vm.evaluation.statut,vm.evaluation.typeAvct,vm.evaluation.cap))">
 			<hlayout>
