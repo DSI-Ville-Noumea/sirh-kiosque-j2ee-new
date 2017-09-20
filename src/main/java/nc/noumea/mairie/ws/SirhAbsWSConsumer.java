@@ -57,6 +57,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeDto;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.dto.SaisieGardeDto;
 import nc.noumea.mairie.kiosque.abs.dto.SoldeDto;
 import nc.noumea.mairie.kiosque.abs.dto.ViseursDto;
@@ -170,7 +171,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 	}
 
 	@Override
-	public List<DemandeDto> getDemandesAgent(Integer idAgent, String onglet, Date fromDate, Date toDate,
+	public ResultListDemandeDto getDemandesAgent(Integer idAgent, String onglet, Date fromDate, Date toDate,
 			Date dateDemande, String listIdRefEtat, Integer idRefType, Integer idRefGroupeAbsence) {
 
 		String url = String.format(sirhAbsWsBaseUrl + sirhDemandesAgentUrl);
@@ -191,7 +192,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 			params.put("groupe", idRefGroupeAbsence.toString());
 
 		ClientResponse res = createAndFireGetRequest(params, url);
-		return readResponseAsList(DemandeDto.class, res, url);
+		return readResponse(ResultListDemandeDto.class, res, url);
 	}
 
 	@Override
@@ -501,7 +502,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 	}
 
 	@Override
-	public List<DemandeDto> getListeDemandes(Integer idAgent, String onglet, Date fromDate, Date toDate,
+	public ResultListDemandeDto getListeDemandes(Integer idAgent, String onglet, Date fromDate, Date toDate,
 			Date dateDemande, String listIdRefEtat, Integer idRefType, Integer idRefGroupeAbsence,
 			Integer idAgentRecherche, Integer idServiceADS) {
 
@@ -527,7 +528,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 			params.put("idServiceADS", idServiceADS.toString());
 
 		ClientResponse res = createAndFireGetRequest(params, url);
-		return readResponseAsList(DemandeDto.class, res, url);
+		return readResponse(ResultListDemandeDto.class, res, url);
 	}
 
 	@Override

@@ -45,6 +45,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeGroupeAbsenceEnum;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.planning.CustomEventsManager;
 import nc.noumea.mairie.kiosque.abs.planning.vo.CustomDHXPlanner;
 import nc.noumea.mairie.kiosque.dto.AgentDto;
@@ -242,11 +243,23 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			etats.add(etat.getIdRefEtat());
 		}
 
-		List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), getTabCourant().getId(), getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
+		ResultListDemandeDto result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), getTabCourant().getId(), getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
 				etats.size() == 0 ? null : etats.toString().replace("[", "").replace("]", "").replace(" ", ""), getTypeAbsenceFiltre() == null ? null : getTypeAbsenceFiltre().getIdRefTypeAbsence(),
 				getGroupeAbsenceFiltre() == null ? null : getGroupeAbsenceFiltre().getIdRefGroupeAbsence(), getAgentFiltre() == null ? null : getAgentFiltre().getIdAgent(),
 				getServiceFiltre() == null ? null : getServiceFiltre().getIdEntite());
-		setListeDemandes(result);
+		setListeDemandes(null != result ? result.getListDemandesDto(): new ArrayList<DemandeDto>());
+		
+		// message d infos si liste tronquée
+		if (result.isResultatsLimites()) {
+			
+			final HashMap<String, Object> map = new HashMap<String, Object>();
+			List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
+			ValidationMessage vm = new ValidationMessage(result.getMessageInfoResultatsLimites());
+			listInfo.add(vm);
+			
+			map.put("infos", listInfo);
+			Executions.createComponents("/messages/returnMessage.zul", null, map);
+		}
 
 		// #12159 construction du planning
 		if (TAB_PLANNING.equals(getTabCourant().getId())) {

@@ -49,6 +49,7 @@ import org.zkoss.zul.Panel;
 
 import nc.noumea.mairie.kiosque.abs.dto.DemandeDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.dto.AccueilRhDto;
 import nc.noumea.mairie.kiosque.dto.ReferentRhDto;
 import nc.noumea.mairie.kiosque.dto.ReturnMessageDto;
@@ -158,12 +159,14 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			etats.add(RefEtatEnum.VISEE_FAVORABLE.getCodeEtat());
 			etats.add(RefEtatEnum.VISEE_DEFAVORABLE.getCodeEtat());
 
-			List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
+			ResultListDemandeDto result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
 					.replace(" ", ""), null, null, null, null);
 			Integer nbrAbs = 0;
-			for (DemandeDto dto : result) {
-				if (dto.isModifierApprobation()) {
-					nbrAbs++;
+			if(null != result) {
+				for (DemandeDto dto : result.getListDemandesDto()) {
+					if (dto.isModifierApprobation()) {
+						nbrAbs++;
+					}
 				}
 			}
 
@@ -185,10 +188,10 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			List<Integer> etats = new ArrayList<Integer>();
 			etats.add(RefEtatEnum.SAISIE.getCodeEtat());
 
-			List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
+			ResultListDemandeDto result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
 					.replace(" ", ""), null, null, null, null);
 			Integer nbrAbs = 0;
-			for (DemandeDto dto : result) {
+			for (DemandeDto dto : result.getListDemandesDto()) {
 				if (dto.isModifierVisa()) {
 					nbrAbs++;
 				}

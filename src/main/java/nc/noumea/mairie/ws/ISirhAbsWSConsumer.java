@@ -48,6 +48,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeDto;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.dto.SaisieGardeDto;
 import nc.noumea.mairie.kiosque.abs.dto.SoldeDto;
 import nc.noumea.mairie.kiosque.abs.dto.ViseursDto;
@@ -87,7 +88,7 @@ public interface ISirhAbsWSConsumer {
 
 	/* DEMANDES AGENTS */
 
-	List<DemandeDto> getDemandesAgent(Integer idAgent, String onglet, Date fromDate, Date toDate, Date dateDemande,
+	ResultListDemandeDto getDemandesAgent(Integer idAgent, String onglet, Date fromDate, Date toDate, Date dateDemande,
 			String listIdRefEtat, Integer idRefType, Integer idRefGroupeAbsence);
 
 	ReturnMessageAbsDto saveDemandeAbsence(Integer idAgent, DemandeDto dto);
@@ -147,7 +148,7 @@ public interface ISirhAbsWSConsumer {
 
 	/* GESTION DEMANDES */
 
-	List<DemandeDto> getListeDemandes(Integer idAgent, String onglet, Date fromDate, Date toDate, Date dateDemande,
+	ResultListDemandeDto getListeDemandes(Integer idAgent, String onglet, Date fromDate, Date toDate, Date dateDemande,
 			String listIdRefEtat, Integer idRefType, Integer idRefGroupeAbsence, Integer idAgentRecherche,
 			Integer idServiceADS);
 

@@ -68,6 +68,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.planning.CustomEventsManager;
 import nc.noumea.mairie.kiosque.abs.planning.vo.CustomDHXPlanner;
 import nc.noumea.mairie.kiosque.dto.AgentWithServiceDto;
@@ -75,6 +76,7 @@ import nc.noumea.mairie.kiosque.export.ExcelExporter;
 import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
 import nc.noumea.mairie.kiosque.travail.dto.EstChefDto;
+import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.ws.IAdsWSConsumer;
 import nc.noumea.mairie.ws.ISirhAbsWSConsumer;
 import nc.noumea.mairie.ws.ISirhWSConsumer;
@@ -216,7 +218,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 
 	@Command
 	@NotifyChange({ "listeDemandes", "listeEtatAbsenceFiltre" })
-	public void changeVue(@BindingParam("tab") Tab tab) {
+	public void changeVue(@BindingParam("tab") Tab tab, @BindingParam("win") Window window) {
 		setListeDemandes(null);
 		List<RefEtatAbsenceDto> filtreEtat = new ArrayList<RefEtatAbsenceDto>();
 		// on recharge les états d'absences pour les filtres
@@ -225,19 +227,19 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 		setListeEtatAbsenceFiltre(filtreEtat);
 		// on sauvegarde l'onglet
 		setTabCourant(tab);
-		filtrer(null);
+		filtrer(null, window);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void setTabDebut(@BindingParam("tab") Tab tab) {
+	public void setTabDebut(@BindingParam("tab") Tab tab, @BindingParam("win") Window window) {
 		setTabCourant(tab);
-		filtrer(null);
+		filtrer(null, window);
 	}
 
 	@Command
 	@NotifyChange({ "*" })
-	public void filtrer(@BindingParam("ref") Chosenbox boxEtat) {
+	public void filtrer(@BindingParam("ref") Chosenbox boxEtat, @BindingParam("win") Window window) {
 		List<Integer> etats = new ArrayList<Integer>();
 		if (boxEtat != null) {
 			for (Object etat : boxEtat.getSelectedObjects()) {
@@ -266,18 +268,30 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 			s.setAttribute("listeAgentsEquipe", getListAgentsEquipe());
 			doAfterCompose(getTabCourant().getFellow("tb").getFellow("tabpanelplanning").getFellow("includeplanning").getFellow("windowplanning"));
 		} else {
-			List<DemandeDto> result = absWsConsumer.getDemandesAgent(currentUser.getAgent().getIdAgent(), getTabCourant().getId(),
+			ResultListDemandeDto result = absWsConsumer.getDemandesAgent(currentUser.getAgent().getIdAgent(), getTabCourant().getId(),
 					getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
 					etats.size() == 0 ? null : etats.toString().replace("[", "").replace("]", "").replace(" ", ""),
 					getTypeAbsenceFiltre() == null ? null : getTypeAbsenceFiltre().getIdRefTypeAbsence(),
 					getGroupeAbsenceFiltre() == null ? null : getGroupeAbsenceFiltre().getIdRefGroupeAbsence());
-			setListeDemandes(result);
+			setListeDemandes(null != result ? result.getListDemandesDto() : new ArrayList<DemandeDto>());
+			
+			// message d infos si liste tronquée
+			if (result.isResultatsLimites()) {
+				
+				final HashMap<String, Object> map = new HashMap<String, Object>();
+				List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
+				ValidationMessage vm = new ValidationMessage(result.getMessageInfoResultatsLimites());
+				listInfo.add(vm);
+				
+				map.put("infos", listInfo);
+				Executions.createComponents("/messages/returnMessage.zul", null, map);
+			}
 		}
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void doSearch() {
+	public void doSearch(@BindingParam("win") Window window) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<DemandeDto> list = new ArrayList<DemandeDto>();
 		if (getFilter() != null && !"".equals(getFilter()) && getListeDemandes() != null) {
@@ -293,7 +307,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 			}
 			setListeDemandes(list);
 		} else {
-			filtrer(null);
+			filtrer(null, window);
 		}
 	}
 
@@ -376,8 +390,8 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 
 	@GlobalCommand
 	@NotifyChange({ "listeDemandes" })
-	public void refreshListeDemande() {
-		filtrer(null);
+	public void refreshListeDemande(@BindingParam("win") Window window) {
+		filtrer(null, window);
 	}
 
 	@Command
