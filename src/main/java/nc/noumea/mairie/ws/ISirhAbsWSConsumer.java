@@ -176,4 +176,14 @@ public interface ISirhAbsWSConsumer {
 
 	List<RefGroupeAbsenceDto> getRefGroupeAbsenceForAgent();
 
+	/**
+	 * Appel du WS ABS demandes/countDemandesAViserOuApprouver
+	 * 
+	 * @param idAgent L ID agent connecté
+	 * @param viseur Boolean
+	 * @param approbateur Boolean
+	 * @return Le nombre de demandes à viser ou approuver
+	 */
+	Integer countDemandesAViserOuApprouver(Integer idAgent, boolean viseur, boolean approbateur);
+
 }

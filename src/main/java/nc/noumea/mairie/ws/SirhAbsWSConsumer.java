@@ -94,6 +94,7 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 	private static final String sirhDemandesAgentUrl = "demandes/listeDemandesAgent";
 	private static final String sirhPrintDemandesAgentUrl = "edition/downloadTitreDemande";
 	private static final String sirhListeDemandesUrl = "demandes/listeDemandes";
+	private static final String sirhCountDemandesAViserOuApprouverUrl = "demandes/countDemandesAViserOuApprouver";
 	private static final String sirhPersistDemandeControleMedicalUrl = "demandes/persistDemandeControleMedical";
 	private static final String sirhGetDemandeControleMedicalUrl = "demandes/getDemandeControleMedical";
 	private static final String	sirhAbsDemandesATForAgent							= "demandes/listeATReferenceForAgent";
@@ -529,6 +530,20 @@ public class SirhAbsWSConsumer extends BaseWsConsumer implements ISirhAbsWSConsu
 
 		ClientResponse res = createAndFireGetRequest(params, url);
 		return readResponse(ResultListDemandeDto.class, res, url);
+	}
+
+	@Override
+	public Integer countDemandesAViserOuApprouver(Integer idAgent, boolean viseur, boolean approbateur) {
+
+		String url = String.format(sirhAbsWsBaseUrl + sirhCountDemandesAViserOuApprouverUrl);
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("idAgent", idAgent.toString());
+		params.put("viseur", Boolean.valueOf(viseur).toString());
+		params.put("approbateur", Boolean.valueOf(approbateur).toString());
+
+		ClientResponse res = createAndFireGetRequest(params, url);
+		return readResponseAsInteger(res, url);
 	}
 
 	@Override
