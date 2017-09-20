@@ -55,6 +55,7 @@ import nc.noumea.mairie.kiosque.export.ExcelExporter;
 import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.kiosque.viewModel.AbstractViewModel;
+import nc.noumea.mairie.utils.DateUtils;
 
 import org.apache.catalina.session.StandardSessionFacade;
 import org.slf4j.Logger;
@@ -71,6 +72,7 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkmax.zul.Chosenbox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
@@ -118,10 +120,16 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	private List<RefEtatAbsenceDto> listeEtatsSelectionnes;
 
 	private List<AgentWithServiceDto> listAgentsEquipe;
-
+	
+	@WireVariable
+	private DateUtils dateUtils;
+	
 	@Init
 	public void initDemandes(@BindingParam("aApprouver") Boolean aApprouver) {
 
+		// init date debut
+		setDateDebutFiltre(dateUtils.getCurrentDateMoins2MoisParDefaut());
+		
 		// on recharge les groupes d'absences pour les filtres
 		List<RefGroupeAbsenceDto> filtreGroupeFamille = absWsConsumer.getRefGroupeAbsence();
 		setListeGroupeAbsenceFiltre(filtreGroupeFamille);

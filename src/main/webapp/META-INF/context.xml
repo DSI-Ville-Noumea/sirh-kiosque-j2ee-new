@@ -108,6 +108,11 @@
 	<Parameter description="Hôte LDAP 2" name="HOST_LDAP2"
 		override="false" value="ldap://gberge:389/" />
 	<Parameter description="Hôte LDAP 3" name="HOST_LDAP3"
-		override="false" value="ldap://netone:389/" />		
+		override="false" value="ldap://netone:389/" />
+		
+	 <!-- Nombre de mois dans le passé pour l'affichage par defaut de la liste des demandes dans le kiosque  -->
+     <Environment description="Nombre mois liste demandes" name="NB_MOIS_PASSE_LISTE_DEMANDES"
+	     type="java.lang.String" override="false" value="2" />
+	
 
 </Context>

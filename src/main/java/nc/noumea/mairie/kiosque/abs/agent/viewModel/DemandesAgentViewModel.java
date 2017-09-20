@@ -77,6 +77,7 @@ import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
 import nc.noumea.mairie.kiosque.travail.dto.EstChefDto;
 import nc.noumea.mairie.kiosque.validation.ValidationMessage;
+import nc.noumea.mairie.utils.DateUtils;
 import nc.noumea.mairie.ws.IAdsWSConsumer;
 import nc.noumea.mairie.ws.ISirhAbsWSConsumer;
 import nc.noumea.mairie.ws.ISirhWSConsumer;
@@ -126,12 +127,18 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 	private ActeursDto					acteursDto;
 
 	private List<AgentWithServiceDto>	listAgentsEquipe;
+	
+	@WireVariable
+	private DateUtils 					dateUtils;
 
 	@Init
 	public void initDemandesAgent() {
 
 		currentUser = (ProfilAgentDto) Sessions.getCurrent().getAttribute("currentUser");
 
+		// init date debut
+		setDateDebutFiltre(dateUtils.getCurrentDateMoins2MoisParDefaut());
+		
 		// on recharge les groupes d'absences pour les filtres
 		List<RefGroupeAbsenceDto> filtreGroupeFamille = absWsConsumer.getRefGroupeAbsence();
 		setListeGroupeAbsenceFiltre(filtreGroupeFamille);
