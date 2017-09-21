@@ -76,7 +76,6 @@ import nc.noumea.mairie.kiosque.export.ExcelExporter;
 import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
 import nc.noumea.mairie.kiosque.travail.dto.EstChefDto;
-import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.utils.DateUtils;
 import nc.noumea.mairie.ws.IAdsWSConsumer;
 import nc.noumea.mairie.ws.ISirhAbsWSConsumer;
@@ -225,7 +224,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 
 	@Command
 	@NotifyChange({ "listeDemandes", "listeEtatAbsenceFiltre" })
-	public void changeVue(@BindingParam("tab") Tab tab, @BindingParam("win") Window window) {
+	public void changeVue(@BindingParam("tab") Tab tab) {
 		setListeDemandes(null);
 		List<RefEtatAbsenceDto> filtreEtat = new ArrayList<RefEtatAbsenceDto>();
 		// on recharge les états d'absences pour les filtres
@@ -234,14 +233,14 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 		setListeEtatAbsenceFiltre(filtreEtat);
 		// on sauvegarde l'onglet
 		setTabCourant(tab);
-		filtrer(null, window);
+		filtrer(null, null);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void setTabDebut(@BindingParam("tab") Tab tab, @BindingParam("win") Window window) {
+	public void setTabDebut(@BindingParam("tab") Tab tab) {
 		setTabCourant(tab);
-		filtrer(null, window);
+		filtrer(null, null);
 	}
 
 	@Command
@@ -281,24 +280,12 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 					getTypeAbsenceFiltre() == null ? null : getTypeAbsenceFiltre().getIdRefTypeAbsence(),
 					getGroupeAbsenceFiltre() == null ? null : getGroupeAbsenceFiltre().getIdRefGroupeAbsence());
 			setListeDemandes(null != result ? result.getListDemandesDto() : new ArrayList<DemandeDto>());
-			
-			// message d infos si liste tronquée
-			if (result.isResultatsLimites()) {
-				
-				final HashMap<String, Object> map = new HashMap<String, Object>();
-				List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
-				ValidationMessage vm = new ValidationMessage(result.getMessageInfoResultatsLimites());
-				listInfo.add(vm);
-				
-				map.put("infos", listInfo);
-				Executions.createComponents("/messages/returnMessage.zul", null, map);
-			}
 		}
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void doSearch(@BindingParam("win") Window window) {
+	public void doSearch() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<DemandeDto> list = new ArrayList<DemandeDto>();
 		if (getFilter() != null && !"".equals(getFilter()) && getListeDemandes() != null) {
@@ -314,7 +301,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 			}
 			setListeDemandes(list);
 		} else {
-			filtrer(null, window);
+			filtrer(null, null);
 		}
 	}
 
@@ -397,8 +384,8 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 
 	@GlobalCommand
 	@NotifyChange({ "listeDemandes" })
-	public void refreshListeDemande(@BindingParam("win") Window window) {
-		filtrer(null, window);
+	public void refreshListeDemande() {
+		filtrer(null, null);
 	}
 
 	@Command

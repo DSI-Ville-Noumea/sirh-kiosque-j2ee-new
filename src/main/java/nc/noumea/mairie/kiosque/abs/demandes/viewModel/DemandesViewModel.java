@@ -201,7 +201,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			}
 			setListeDemandes(list);
 		} else {
-			filtrer(null);
+			filtrer(null, false);
 		}
 	}
 
@@ -232,19 +232,19 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 		// on sauvegarde l'onglet
 		setTabCourant(tab);
 		setListeEtatsSelectionnes(null);
-		filtrer(null);
+		filtrer(null, true);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
 	public void setTabDebut(@BindingParam("tab") Tab tab) {
 		setTabCourant(tab);
-		filtrer(null);
+		filtrer(null, true);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void filtrer(@BindingParam("ref") Chosenbox boxEtat) {
+	public void filtrer(@BindingParam("ref") Chosenbox boxEtat, Boolean afficheMsgLimitNbDemandes) {
 
 		List<Integer> etats = new ArrayList<Integer>();
 		for (RefEtatAbsenceDto etat : getListeEtatsSelectionnes()) {
@@ -258,7 +258,9 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 		setListeDemandes(null != result ? result.getListDemandesDto(): new ArrayList<DemandeDto>());
 		
 		// message d infos si liste tronquée
-		if (result.isResultatsLimites()) {
+		if (result.isResultatsLimites()
+				&& (null == afficheMsgLimitNbDemandes
+					|| afficheMsgLimitNbDemandes)) {
 			
 			final HashMap<String, Object> map = new HashMap<String, Object>();
 			List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
@@ -309,7 +311,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	@GlobalCommand
 	@NotifyChange({ "listeDemandes" })
 	public void refreshListeDemande() {
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -339,7 +341,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -383,7 +385,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -439,7 +441,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -482,7 +484,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
