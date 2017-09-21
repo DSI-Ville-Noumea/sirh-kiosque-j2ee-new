@@ -233,19 +233,19 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 		setListeEtatAbsenceFiltre(filtreEtat);
 		// on sauvegarde l'onglet
 		setTabCourant(tab);
-		filtrer(null, null);
+		filtrer(null);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
 	public void setTabDebut(@BindingParam("tab") Tab tab) {
 		setTabCourant(tab);
-		filtrer(null, null);
+		filtrer(null);
 	}
 
 	@Command
 	@NotifyChange({ "*" })
-	public void filtrer(@BindingParam("ref") Chosenbox boxEtat, @BindingParam("win") Window window) {
+	public void filtrer(@BindingParam("ref") Chosenbox boxEtat) {
 		List<Integer> etats = new ArrayList<Integer>();
 		if (boxEtat != null) {
 			for (Object etat : boxEtat.getSelectedObjects()) {
@@ -301,7 +301,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 			}
 			setListeDemandes(list);
 		} else {
-			filtrer(null, null);
+			filtrer(null);
 		}
 	}
 
@@ -385,7 +385,7 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 	@GlobalCommand
 	@NotifyChange({ "listeDemandes" })
 	public void refreshListeDemande() {
-		filtrer(null, null);
+		filtrer(null);
 	}
 
 	@Command
