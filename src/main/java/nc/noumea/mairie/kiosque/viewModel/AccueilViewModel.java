@@ -47,7 +47,6 @@ import org.zkoss.zkmax.zul.Portallayout;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Panel;
 
-import nc.noumea.mairie.kiosque.abs.dto.DemandeDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
 import nc.noumea.mairie.kiosque.dto.AccueilRhDto;
 import nc.noumea.mairie.kiosque.dto.ReferentRhDto;
@@ -158,15 +157,8 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			etats.add(RefEtatEnum.VISEE_FAVORABLE.getCodeEtat());
 			etats.add(RefEtatEnum.VISEE_DEFAVORABLE.getCodeEtat());
 
-			List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
-					.replace(" ", ""), null, null, null, null);
-			Integer nbrAbs = 0;
-			for (DemandeDto dto : result) {
-				if (dto.isModifierApprobation()) {
-					nbrAbs++;
-				}
-			}
-
+			Integer nbrAbs = absWsConsumer.countDemandesAViserOuApprouver(getCurrentUser().getAgent().getIdAgent(), false, true);
+			
 			String nbrAbsStr = "";
 			if (0 == nbrAbs) {
 				nbrAbsStr = "Vous n'avez pas de demande d'absence à approuver.";
@@ -185,15 +177,8 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			List<Integer> etats = new ArrayList<Integer>();
 			etats.add(RefEtatEnum.SAISIE.getCodeEtat());
 
-			List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), "NON_PRISES", null, null, null, etats.toString().replace("[", "").replace("]", "")
-					.replace(" ", ""), null, null, null, null);
-			Integer nbrAbs = 0;
-			for (DemandeDto dto : result) {
-				if (dto.isModifierVisa()) {
-					nbrAbs++;
-				}
-			}
-
+			Integer nbrAbs = absWsConsumer.countDemandesAViserOuApprouver(getCurrentUser().getAgent().getIdAgent(), true, false);
+			
 			String nbrAbsViserStr = "";
 			if (0 == nbrAbs) {
 				nbrAbsViserStr = "Vous n'avez pas de demande d'absence à viser.";
@@ -204,6 +189,7 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			}
 			setNombreAbsenceAViser(nbrAbsViserStr);
 		}
+		
 		if (isDroitsEae()) {
 			
 			logger.debug("Agent " + getCurrentUser().getAgent().getIdAgent() + " a les droits EAE");
