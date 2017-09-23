@@ -53,8 +53,6 @@ import nc.noumea.mairie.kiosque.export.pdf.PdfWriterFactoryImpl;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Auxhead;
 import org.zkoss.zul.Auxheader;
-import org.zkoss.zul.Group;
-import org.zkoss.zul.Listgroup;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.impl.HeaderElement;
 import org.zkoss.zul.impl.MeshElement;
