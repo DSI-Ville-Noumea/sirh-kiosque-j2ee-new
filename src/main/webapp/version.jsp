@@ -29,3 +29,16 @@ sirh.kiosque.j2ee.canonicalhostname=<%=InetAddress.getLocalHost().getCanonicalHo
 sirh.kiosque.j2ee.hostname=<%=InetAddress.getLocalHost().getHostName() %><br/>
 sirh.kiosque.j2ee.tomcat.version=<%= application.getServerInfo() %><br/>
 sirh.kiosque.j2ee.tomcat.catalina_base=<%= System.getProperty("catalina.base") %><br/>
+<% 
+HttpSession theSession = request.getSession( false );
+
+// print out the session id
+if( theSession != null ) {
+  //pw.println( "<BR>Session Id: " + theSession.getId() );
+  synchronized( theSession ) {
+    // invalidating a session destroys it
+    theSession.invalidate();
+    //pw.println( "<BR>Session destroyed" );
+  }
+}
+%>
