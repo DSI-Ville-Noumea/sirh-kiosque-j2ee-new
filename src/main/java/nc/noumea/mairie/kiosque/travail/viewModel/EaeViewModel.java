@@ -24,18 +24,12 @@ package nc.noumea.mairie.kiosque.travail.viewModel;
  * #L%
  */
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Window;
 
 import nc.noumea.mairie.kiosque.eae.dto.EaeFinalisationDto;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
