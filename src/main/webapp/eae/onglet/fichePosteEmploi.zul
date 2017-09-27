@@ -1,0 +1,113 @@
+<zk>
+    <label sclass="RHTitle3" value="IDENTIFICATION DU POSTE"/>
+    <separator/>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Intitulé du poste"/>
+        </div>
+        <div sclass="bleu">
+            <label value="@bind(vm.fichePostePrimaire.intitule)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Grade"/>
+        </div>
+        <div sclass="bleu">
+            <label value="@bind(vm.fichePostePrimaire.grade)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Emploi"/>
+        </div>
+        <div sclass="bleu">
+            <label value="@bind(vm.fichePostePrimaire.emploi)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Collectivité"/>
+        </div>
+        <div sclass="bleu">
+            <label value="VILLE DE NOUMEA"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Direction/Service"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.fichePostePrimaire.directionService)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Localisation"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.fichePostePrimaire.localisation)"/>
+        </div>
+    </hlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="MISSION"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.fichePostePrimaire.missions)"/>
+    </div>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="LIEN HIERARCHIQUE"/>
+    <hlayout>
+        <div sclass="espace" width="300px">
+            <label
+                    value="Fonction et nom du responsable hiérarchique direct"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.getInfoResponsable(vm.fichePostePrimaire))"/>
+        </div>
+    </hlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="ACTIVITES"/>
+    <vlayout style="margin-left: 50px;width:100%" sclass="bleu">
+        <zk forEach="${vm.fichePostePrimaire.activites}">
+            <label sclass="value" value="- ${each}"/>
+        </zk>
+    </vlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="COMPETENCES REQUISES"/>
+    <separator/>
+    <label value="Comportements professionnels"
+           visible="@bind(not empty vm.fichePostePrimaire.competencesComportementProfessionnel)"
+           style="color: #d3711c;font-weight: bold;"/>
+    <vlayout style="margin-left: 50px;width:100%" sclass="bleu">
+        <zk
+                forEach="${vm.fichePostePrimaire.competencesComportementProfessionnel}">
+            <div>
+                <label sclass="value" value="- ${each}"/>
+            </div>
+        </zk>
+    </vlayout>
+    <label value="Savoir"
+           visible="@bind(not empty vm.fichePostePrimaire.competencesSavoir)"
+           style="color: #d3711c;font-weight: bold;"/>
+    <vlayout style="margin-left: 50px;width:100%" sclass="bleu">
+        <zk forEach="${vm.fichePostePrimaire.competencesSavoir}">
+            <div>
+                <label sclass="value" value="- ${each}"/>
+            </div>
+        </zk>
+    </vlayout>
+    <label value="Savoir-faire"
+           visible="@bind(not empty vm.fichePostePrimaire.competencesSavoirFaire)"
+           style="color: #d3711c;font-weight: bold;"/>
+    <vlayout style="margin-left: 50px;width:100%" sclass="bleu">
+        <zk
+                forEach="${vm.fichePostePrimaire.competencesSavoirFaire}">
+            <div>
+                <label sclass="value" value="- ${each}"/>
+            </div>
+        </zk>
+    </vlayout>
+</zk>
