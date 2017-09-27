@@ -131,7 +131,7 @@
                 </div>
                 <div class="RHTitle3">Spécialisation éventuelle</div>
                 <div sclass="RHContent">
-                    <label
+                    <label style="color:black;"
                             value="${each.specialisation}"/>
                 </div>
                 <div sclass="RHTitle2Line"/>
@@ -139,7 +139,7 @@
                 <separator/>
                 <div class="RHTitle3">Informations complémentaires</div>
                 <div sclass="RHContent">
-                    <label value="${each.informationsComplementaires}"/>
+                    <label style="color:black;" value="${each.informationsComplementaires}"/>
                 </div>
                 <div sclass="RHTitle2Line"/>
                 <separator/>
