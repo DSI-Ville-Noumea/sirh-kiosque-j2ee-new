@@ -45,6 +45,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeGroupeAbsenceEnum;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.planning.CustomEventsManager;
 import nc.noumea.mairie.kiosque.abs.planning.vo.CustomDHXPlanner;
 import nc.noumea.mairie.kiosque.dto.AgentDto;
@@ -54,6 +55,7 @@ import nc.noumea.mairie.kiosque.export.ExcelExporter;
 import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.kiosque.viewModel.AbstractViewModel;
+import nc.noumea.mairie.utils.DateUtils;
 
 import org.apache.catalina.session.StandardSessionFacade;
 import org.slf4j.Logger;
@@ -70,6 +72,7 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkmax.zul.Chosenbox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
@@ -117,10 +120,16 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	private List<RefEtatAbsenceDto> listeEtatsSelectionnes;
 
 	private List<AgentWithServiceDto> listAgentsEquipe;
-
+	
+	@WireVariable
+	private DateUtils dateUtils;
+	
 	@Init
 	public void initDemandes(@BindingParam("aApprouver") Boolean aApprouver) {
 
+		// init date debut
+		setDateDebutFiltre(dateUtils.getCurrentDateMoins2MoisParDefaut());
+		
 		// on recharge les groupes d'absences pour les filtres
 		List<RefGroupeAbsenceDto> filtreGroupeFamille = absWsConsumer.getRefGroupeAbsence();
 		setListeGroupeAbsenceFiltre(filtreGroupeFamille);
@@ -192,7 +201,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			}
 			setListeDemandes(list);
 		} else {
-			filtrer(null);
+			filtrer(null, false);
 		}
 	}
 
@@ -223,30 +232,44 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 		// on sauvegarde l'onglet
 		setTabCourant(tab);
 		setListeEtatsSelectionnes(null);
-		filtrer(null);
+		filtrer(null, true);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
 	public void setTabDebut(@BindingParam("tab") Tab tab) {
 		setTabCourant(tab);
-		filtrer(null);
+		filtrer(null, true);
 	}
 
 	@Command
 	@NotifyChange({ "listeDemandes" })
-	public void filtrer(@BindingParam("ref") Chosenbox boxEtat) {
+	public void filtrer(@BindingParam("ref") Chosenbox boxEtat, Boolean afficheMsgLimitNbDemandes) {
 
 		List<Integer> etats = new ArrayList<Integer>();
 		for (RefEtatAbsenceDto etat : getListeEtatsSelectionnes()) {
 			etats.add(etat.getIdRefEtat());
 		}
 
-		List<DemandeDto> result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), getTabCourant().getId(), getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
+		ResultListDemandeDto result = absWsConsumer.getListeDemandes(getCurrentUser().getAgent().getIdAgent(), getTabCourant().getId(), getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
 				etats.size() == 0 ? null : etats.toString().replace("[", "").replace("]", "").replace(" ", ""), getTypeAbsenceFiltre() == null ? null : getTypeAbsenceFiltre().getIdRefTypeAbsence(),
 				getGroupeAbsenceFiltre() == null ? null : getGroupeAbsenceFiltre().getIdRefGroupeAbsence(), getAgentFiltre() == null ? null : getAgentFiltre().getIdAgent(),
 				getServiceFiltre() == null ? null : getServiceFiltre().getIdEntite());
-		setListeDemandes(result);
+		setListeDemandes(null != result ? result.getListDemandesDto(): new ArrayList<DemandeDto>());
+		
+		// message d infos si liste tronquée
+		if (result.isResultatsLimites()
+				&& (null == afficheMsgLimitNbDemandes
+					|| afficheMsgLimitNbDemandes)) {
+			
+			final HashMap<String, Object> map = new HashMap<String, Object>();
+			List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
+			ValidationMessage vm = new ValidationMessage(result.getMessageInfoResultatsLimites());
+			listInfo.add(vm);
+			
+			map.put("infos", listInfo);
+			Executions.createComponents("/messages/returnMessage.zul", null, map);
+		}
 
 		// #12159 construction du planning
 		if (TAB_PLANNING.equals(getTabCourant().getId())) {
@@ -288,7 +311,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	@GlobalCommand
 	@NotifyChange({ "listeDemandes" })
 	public void refreshListeDemande() {
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -318,7 +341,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -362,7 +385,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -418,7 +441,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
@@ -461,7 +484,7 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 			Executions.createComponents("/messages/returnMessage.zul", null, map);
 		}
 
-		filtrer(null);
+		filtrer(null, false);
 	}
 
 	@Command
