@@ -114,31 +114,6 @@
 			</div>
 		</hlayout>
 		
-				
-		<separator />
-		<hlayout >
-		<!-- TODO : Vérifier les règles d'affichage et de modification ! -->
-			<label value="Dans le cadre d'un changement de corps ou de grade, la manière de servir de l'agent est : " />
-			<!-- Changement de corps et de grade -->
-			<radiogroup
-				visible="@bind(vm.isChangementCorps(vm.evaluation.typeAvct))"
-				onCheck="@command('textChangedEvaluation')"
-				selectedItem="@bind(vm.evaluation.avisChangementCorps)">
-				<radio label="Très bonne" disabled="@bind(not vm.modification)" value="TRES_BONNE" />
-				<radio label="Bonne" disabled="@bind(not vm.modification)" value="BONNE" />
-				<radio label="Avis réservé" disabled="@bind(not vm.modification)" value="AVIS_RESERVE" />
-			</radiogroup>
-			<radiogroup
-				visible="@bind(vm.isChangementGrade(vm.evaluation.typeAvct))"
-				onCheck="@command('textChangedEvaluation')"
-				selectedItem="@bind(vm.evaluation.avisChangementGrade)">
-				<radio label="Très bonne" disabled="@bind(not vm.modification)" value="TRES_BONNE" />
-				<radio label="Bonne" disabled="@bind(not vm.modification)" value="BONNE" />
-				<radio label="Avis réservé" disabled="@bind(not vm.modification)" value="AVIS_RESERVE" />
-			</radiogroup>
-			<!-- Fin du changement de corps et de grade -->
-		</hlayout>
-		
 		<separator />
 		<label
 			value="Commentaires éventuels de l'évalué concernant l'appréciation"
