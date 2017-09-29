@@ -68,6 +68,7 @@ import nc.noumea.mairie.kiosque.abs.dto.RefEtatAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefEtatEnum;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
+import nc.noumea.mairie.kiosque.abs.dto.ResultListDemandeDto;
 import nc.noumea.mairie.kiosque.abs.planning.CustomEventsManager;
 import nc.noumea.mairie.kiosque.abs.planning.vo.CustomDHXPlanner;
 import nc.noumea.mairie.kiosque.dto.AgentWithServiceDto;
@@ -75,6 +76,7 @@ import nc.noumea.mairie.kiosque.export.ExcelExporter;
 import nc.noumea.mairie.kiosque.export.PdfExporter;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
 import nc.noumea.mairie.kiosque.travail.dto.EstChefDto;
+import nc.noumea.mairie.utils.DateUtils;
 import nc.noumea.mairie.ws.IAdsWSConsumer;
 import nc.noumea.mairie.ws.ISirhAbsWSConsumer;
 import nc.noumea.mairie.ws.ISirhWSConsumer;
@@ -124,12 +126,18 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 	private ActeursDto					acteursDto;
 
 	private List<AgentWithServiceDto>	listAgentsEquipe;
+	
+	@WireVariable
+	private DateUtils 					dateUtils;
 
 	@Init
 	public void initDemandesAgent() {
 
 		currentUser = (ProfilAgentDto) Sessions.getCurrent().getAttribute("currentUser");
 
+		// init date debut
+		setDateDebutFiltre(dateUtils.getCurrentDateMoins2MoisParDefaut());
+		
 		// on recharge les groupes d'absences pour les filtres
 		List<RefGroupeAbsenceDto> filtreGroupeFamille = absWsConsumer.getRefGroupeAbsence();
 		setListeGroupeAbsenceFiltre(filtreGroupeFamille);
@@ -266,12 +274,12 @@ public class DemandesAgentViewModel extends GenericForwardComposer<Component> {
 			s.setAttribute("listeAgentsEquipe", getListAgentsEquipe());
 			doAfterCompose(getTabCourant().getFellow("tb").getFellow("tabpanelplanning").getFellow("includeplanning").getFellow("windowplanning"));
 		} else {
-			List<DemandeDto> result = absWsConsumer.getDemandesAgent(currentUser.getAgent().getIdAgent(), getTabCourant().getId(),
+			ResultListDemandeDto result = absWsConsumer.getDemandesAgent(currentUser.getAgent().getIdAgent(), getTabCourant().getId(),
 					getDateDebutFiltre(), getDateFinFiltre(), getDateDemandeFiltre(),
 					etats.size() == 0 ? null : etats.toString().replace("[", "").replace("]", "").replace(" ", ""),
 					getTypeAbsenceFiltre() == null ? null : getTypeAbsenceFiltre().getIdRefTypeAbsence(),
 					getGroupeAbsenceFiltre() == null ? null : getGroupeAbsenceFiltre().getIdRefGroupeAbsence());
-			setListeDemandes(result);
+			setListeDemandes(null != result ? result.getListDemandesDto() : new ArrayList<DemandeDto>());
 		}
 	}
 
