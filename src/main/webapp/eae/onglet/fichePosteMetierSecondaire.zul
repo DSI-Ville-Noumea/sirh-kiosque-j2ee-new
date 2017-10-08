@@ -1,0 +1,142 @@
+<zk>
+    <label style="font-size: 24px;" value="POSTE N°2"/>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="IDENTIFICATION DU POSTE"/>
+    <separator/>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Intitulé du poste"/>
+        </div>
+        <div sclass="bleu">
+            <label value="@bind(vm.sirhWsFichePosteSecondaire.titre)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Grade"/>
+        </div>
+        <div sclass="bleu">
+            <label value="@bind(vm.sirhWsFichePosteSecondaire.gradePoste)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Collectivité"/>
+        </div>
+        <div sclass="bleu">
+            <label value="VILLE DE NOUMEA"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Direction/Service"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.sirhWsFichePosteSecondaire.service)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Localisation"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.sirhWsFichePosteSecondaire.lieu)"/>
+        </div>
+    </hlayout>
+    <hlayout>
+        <div sclass="espace">
+            <label value="Niveau de management"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.sirhWsFichePosteSecondaire.niveauManagement)"/>
+        </div>
+    </hlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="DEFINITION DU POSTE"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.missions)"/>
+        <separator if="${!empty vm.sirhWsFichePosteSecondaire.definitionManagement}" />
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.definitionManagement)" if="${!empty vm.sirhWsFichePosteSecondaire.definitionManagement}"></label>
+    </div>
+    <div sclass="blockSeparator"/>
+    <div if='${vm.sirhWsFichePosteSecondaire.niveauManagement != "" and vm.sirhWsFichePosteSecondaire.niveauManagement.toLowerCase() != "aucun"}'>
+        <separator />
+        <separator />
+        <div class="RHTitle3">
+            Compétences managériales
+        </div>
+        <div sclass="RHContent">
+            <zk
+                    forEach="${vm.sirhWsFichePosteSecondaire.competenceManagement}">
+                <div>
+                    <space bar="false"/>
+                    <label sclass="value"
+                           value="* ${each}" />
+                </div>
+            </zk>
+        </div>
+        <div sclass="RHTitle2Line" />
+        <separator />
+        <separator />
+    </div>
+    <label sclass="RHTitle3" value="SPÉCIALISATION ÉVENTUELLE"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.specialisation)"/>
+    </div>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="INFORMATIONS COMPLÉMENTAIRES"/>
+    <div sclass="bleu" width="100%">
+        <label value="@bind(vm.sirhWsFichePosteSecondaire.informationsComplementaires)"/>
+    </div>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="LIEN HIERARCHIQUE"/>
+    <hlayout>
+        <div sclass="espace" width="300px">
+            <label
+                    value="Fonction et nom du responsable hiérarchique direct"/>
+        </div>
+        <div sclass="bleu">
+            <label
+                    value="@bind(vm.getInfoResponsable(vm.fichePosteSecondaire))"/>
+        </div>
+    </hlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="ACTIVITÉS MÉTIER ET SAVOIR-FAIRE"/>
+    <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
+        <zk forEach="${vm.sirhWsFichePosteSecondaire.activiteMetierFormate}">
+            <label sclass="value" value="${each.key}"/>
+            <zk forEach="${each.value}">
+                <div>
+                    <space bar="false"/>
+                    <label sclass="value"
+                           value=" * ${each}"/>
+                </div>
+            </zk>
+        </zk>
+    </vlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="SAVOIRS"/>
+    <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
+        <zk forEach="${vm.sirhWsFichePosteSecondaire.savoirFaireMetier}">
+            <label sclass="value" value="${each}"/>
+        </zk>
+    </vlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="ACTIVITÉS ET COMPÉTENCES GÉNÉRALES"/>
+    <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
+        <zk forEach="${vm.sirhWsFichePosteSecondaire.activiteGenerale}">
+            <label sclass="value" value="${each}"/>
+        </zk>
+    </vlayout>
+    <div sclass="blockSeparator"/>
+    <label sclass="RHTitle3" value="CONDITIONS D'EXERCICE"/>
+    <vlayout style="margin-left: 5px;margin-top: 5px;width:100%" sclass="bleu">
+        <zk forEach="${vm.sirhWsFichePosteSecondaire.conditionExercice}">
+            <label sclass="value" value="${each}"/>
+        </zk>
+    </vlayout>
+    <div sclass="blockSeparator"/>
+</zk>

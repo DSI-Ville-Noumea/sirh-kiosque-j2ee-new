@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nc.noumea.mairie.kiosque.travail.dto.FichePosteDto;
+import nc.noumea.mairie.ws.ISirhWSConsumer;
 import org.apache.commons.lang.StringUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -77,6 +79,9 @@ public class EaeViewModel {
 	@WireVariable
 	private ISirhEaeWSConsumer		eaeWsConsumer;
 
+	@WireVariable
+	private ISirhWSConsumer 		sirhWsConsumer;
+
 	private EaeListItemDto			eaeCourant;
 
 	private Tab						tabCourant;
@@ -90,6 +95,10 @@ public class EaeViewModel {
 	private EaeFichePosteDto		fichePostePrimaire;
 
 	private EaeFichePosteDto		fichePosteSecondaire;
+
+	private FichePosteDto			sirhWsFichePostePrimaire;
+
+	private FichePosteDto			sirhWsFichePosteSecondaire;
 
 	private EaeResultatsDto			resultat;
 
@@ -268,9 +277,15 @@ public class EaeViewModel {
 		List<EaeFichePosteDto> listeFDP = eaeWsConsumer.getListeFichePosteEae(getEaeCourant().getIdEae(), currentUser.getAgent().getIdAgent());
 		setListeFichePoste(listeFDP);
 		if (getListeFichePoste().size() == 1) {
+			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getEaeCourant().getAgentEvalue().getIdAgent());
+			setSirhWsFichePostePrimaire(fpPrimaire);
 			setFichePostePrimaire(getListeFichePoste().get(0));
 		} else if (getListeFichePoste().size() == 2) {
+			FichePosteDto fpPrimaire = sirhWsConsumer.getFichePoste(getEaeCourant().getAgentEvalue().getIdAgent());
+			setSirhWsFichePostePrimaire(fpPrimaire);
 			setFichePostePrimaire(getListeFichePoste().get(0));
+			FichePosteDto fpSecondaire = sirhWsConsumer.getFichePosteSecondaire(getEaeCourant().getAgentEvalue().getIdAgent());
+			setSirhWsFichePosteSecondaire(fpSecondaire);
 			setFichePosteSecondaire(getListeFichePoste().get(1));
 		}
 	}
@@ -1096,6 +1111,22 @@ public class EaeViewModel {
 
 	public void setFichePosteSecondaire(EaeFichePosteDto fichePosteSecondaire) {
 		this.fichePosteSecondaire = fichePosteSecondaire;
+	}
+
+	public FichePosteDto getSirhWsFichePostePrimaire() {
+		return sirhWsFichePostePrimaire;
+	}
+
+	public void setSirhWsFichePostePrimaire(FichePosteDto sirhWsFichePostePrimaire) {
+		this.sirhWsFichePostePrimaire = sirhWsFichePostePrimaire;
+	}
+
+	public FichePosteDto getSirhWsFichePosteSecondaire() {
+		return sirhWsFichePosteSecondaire;
+	}
+
+	public void setSirhWsFichePosteSecondaire(FichePosteDto sirhWsFichePosteSecondaire) {
+		this.sirhWsFichePosteSecondaire = sirhWsFichePosteSecondaire;
 	}
 
 	public EaeResultatsDto getResultat() {

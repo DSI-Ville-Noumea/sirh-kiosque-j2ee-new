@@ -1,0 +1,212 @@
+<zk>
+    <div apply="org.zkoss.bind.BindComposer"
+         viewModel="@id('vm') @init('nc.noumea.mairie.kiosque.travail.viewModel.FichePosteViewModel')" fiche="@ref(vm.ficheSecondaireCourant)">
+        <div sclass="RHTitle2" width="270px">
+            <label
+                    value="Détail de votre fiche de poste secondaire" />
+        </div>
+        <div sclass="RHTitle2Line" />
+        <separator />
+        <div sclass="RHContent">
+            <image sclass="print"
+                   onClick="@command('imprimeFDP',ref=fiche)" />
+            <div class="RHTitle3">Général</div>
+            <hlayout sclass="RHContent">
+                <vlayout>
+                    <div>
+                        <label sclass="name" value="Numero" />
+                        <label sclass="value"
+                               value="@bind(fiche.numero)" />
+                    </div>
+                    <div>
+                        <label sclass="name" value="Budget" />
+                        <label sclass="value"
+                               value="@bind(fiche.budget)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Budgété" />
+                        <label sclass="value"
+                               value="@bind(fiche.budgete)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Réglementaire" />
+                        <label sclass="value"
+                               value="@bind(fiche.reglementaire)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Cadre emploi" />
+                        <label sclass="value"
+                               value="@bind(fiche.cadreEmploi)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Niveau d'études" />
+                        <label sclass="value"
+                               value="@bind(fiche.niveauEtudes)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Management" />
+                        <label sclass="value"
+                               value="@bind(fiche.niveauManagement)" />
+                    </div>
+                </vlayout>
+                <vlayout>
+                    <div>
+                        <label sclass="name" value="Titre" />
+                        <label sclass="value"
+                               value="@bind(fiche.titre)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Direction" />
+                        <label sclass="value"
+                               value="@bind(fiche.direction)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Service" />
+                        <label sclass="value"
+                               value="@bind(fiche.service)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Section" />
+                        <label sclass="value"
+                               value="@bind(fiche.section)" />
+                    </div>
+                    <div>
+                        <label sclass="name" value="Lieu" />
+                        <label sclass="value"
+                               value="@bind(fiche.lieu)" />
+                    </div>
+                    <div>
+                        <label sclass="name"
+                               value="Grade du poste" />
+                        <label sclass="value"
+                               value="@bind(fiche.gradePoste)" />
+                    </div>
+                </vlayout>
+            </hlayout>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">Définition du poste</div>
+            <div sclass="RHContent">
+                <label value="@bind(fiche.missions)" />
+                <separator if="${!empty vm.ficheSecondaireCourant.definitionManagement}" />
+                <label value="@bind(vm.ficheSecondaireCourant.definitionManagement)" if="${!empty vm.ficheSecondaireCourant.definitionManagement}"></label>
+            </div>
+            <div sclass="RHTitle2Line" />
+            <div if='${vm.ficheSecondaireCourant.niveauManagement != "" and vm.ficheSecondaireCourant.niveauManagement.toLowerCase() != "aucun"}'>
+                <separator />
+                <separator />
+                <div class="RHTitle3">
+                    Compétences managériales
+                </div>
+                <div sclass="RHContent">
+                    <zk
+                            forEach="${vm.ficheSecondaireCourant.competenceManagement}">
+                        <div>
+                            <space bar="false"/>
+                            <label sclass="value"
+                                   value="* ${each}" />
+                        </div>
+                    </zk>
+                </div>
+                <div sclass="RHTitle2Line" />
+                <separator />
+                <separator />
+            </div>
+            <div class="RHTitle3">Spécialisation éventuelle</div>
+            <div sclass="RHContent">
+                <label
+                        value="@bind(fiche.specialisation)" />
+            </div>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">Informations complémentaires</div>
+            <div sclass="RHContent">
+                <label
+                        value="@bind(fiche.informationsComplementaires)" />
+            </div>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">
+                Activités métier et savoir-faire
+            </div>
+            <div sclass="RHContent">
+                <zk
+                        forEach="${vm.ficheSecondaireCourant.activiteMetierFormate}">
+                    <div>
+                        <label sclass="value"
+                               value="${each.key}" />
+                        <zk
+                                forEach="${each.value}">
+                            <div>
+                                <space bar="false"/>
+                                <label sclass="value"
+                                       value=" * ${each}" />
+                            </div>
+                        </zk>
+                    </div>
+                    <separator />
+                </zk>
+            </div>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">
+                Savoirs
+            </div>
+            <div sclass="RHContent">
+                <zk
+                        forEach="${vm.ficheSecondaireCourant.savoirFaireMetier}">
+                    <div>
+                        <space bar="false"/>
+                        <label sclass="value"
+                               value="* ${each}" />
+                    </div>
+                </zk>
+            </div>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">
+                Activités et compétences générales
+            </div>
+            <div sclass="RHContent">
+                <zk
+                        forEach="${vm.ficheSecondaireCourant.activiteGenerale}">
+                    <div>
+                        <space bar="false"/>
+                        <label sclass="value"
+                               value="* ${each}" />
+                    </div>
+                </zk>
+            </div>
+            <div sclass="RHTitle2Line" />
+            <separator />
+            <separator />
+            <div class="RHTitle3">
+                Conditions d'exercice
+            </div>
+            <div sclass="RHContent">
+                <zk
+                        forEach="${vm.ficheSecondaireCourant.conditionExercice}">
+                    <div>
+                        <space bar="false"/>
+                        <label sclass="value"
+                               value="* ${each}" />
+                    </div>
+                </zk>
+            </div>
+            <div sclass="RHTitle2Line" />
+        </div>
+    </div>
+</zk>

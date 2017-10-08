@@ -52,9 +52,14 @@
 									<listitem>
 										<listcell
 											style="cursor:default; border:none;">
-											<include
-												visible="${not empty each }"
-												src="/travail/fichePosteEquipe.zul" />
+											<zk choose="">
+												<zk when="${each.version == 1}">
+													<include visible="${not empty each }" src="travail/fichePosteEquipeEmploi.zul" />
+												</zk>
+												<zk when="${each.version == 2}">
+													<include visible="${not empty each }" src="travail/fichePosteEquipeMetier.zul" />
+												</zk>
+											</zk>
 										</listcell>
 									</listitem>
 								</template>
