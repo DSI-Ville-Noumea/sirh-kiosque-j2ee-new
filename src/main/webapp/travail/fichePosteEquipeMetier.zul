@@ -126,9 +126,9 @@
                         </zk>
                     </div>
                     <div sclass="RHTitle2Line" />
-                    <separator />
-                    <separator />
                 </div>
+                <separator />
+                <separator />
                 <div class="RHTitle3">Spécialisation éventuelle</div>
                 <div sclass="RHContent">
                     <label style="color:black;"
