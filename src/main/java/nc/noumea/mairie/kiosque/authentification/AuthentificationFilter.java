@@ -133,10 +133,8 @@ public class AuthentificationFilter implements Filter {
 //			remoteUser = "ngusa79"; // drox sabrina 
 			//remoteUser = "boust75"; // stephanie
 			// remoteUser = "carda69";  // David CARDONA  Approbateur Chef du Service de l’accueil du public et de l’Etat civil (SAPEC)
-			 // remoteUser = "panca71";   // operateur DPM
-			 //remoteUser = "desno82"; // Direction de l'Espace Public 	Service du poste : 	Pôle Administratif et Budgetaire
-			remoteUser = "luile88"; // Section Personnel des Ecoles
-//			remoteUser = "habro64"; // administratif et comptable
+//			 remoteUser = "butja63";   // 3367 operateur DPM
+			 remoteUser = "hodau85";   // 5889
 		}
 		
 		remoteUser = convertRemoteUser(remoteUser);

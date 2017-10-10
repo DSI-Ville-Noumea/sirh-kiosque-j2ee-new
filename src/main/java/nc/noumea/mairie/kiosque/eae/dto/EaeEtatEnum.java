@@ -26,7 +26,8 @@ package nc.noumea.mairie.kiosque.eae.dto;
 
 public enum EaeEtatEnum {
 
-	NA("Non affecté"), ND("Non débuté"), C("Créé"), EC("En cours"), F("Finalisé"), CO("Contrôlé"), S("Supprimé");
+	// #41869 : Changement d'intitulé.
+	NA("Sans évaluateur"), ND("Non débuté"), C("Créé"), EC("En cours"), F("Finalisé"), CO("Contrôlé"), S("Supprimé");
 
 	private String statut;
 

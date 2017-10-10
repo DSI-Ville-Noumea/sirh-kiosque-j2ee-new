@@ -89,11 +89,9 @@
 				</listcell>
 			</listitem>
 		</listbox>
-		<hlayout
-			visible="@bind(vm.isContractuelConvention(vm.evaluation.statut))">
+		<hlayout visible="@bind(vm.isContractuelConvention(vm.evaluation.statut))">
 			<separator />
-			<label
-				value="Dans l'hypothèse d'une revalorisation de salaire (pour contractuels) ou d'une reclassification (si convention collective), j'emets un avis: " />
+			<label value="Dans l'hypothèse d'une revalorisation de salaire (pour contractuels) ou d'une reclassification (si convention collective), j'emets un avis: " />
 			<div sclass="bleu">
 				<radiogroup
 					visible="@bind(vm.isChangementClasse(vm.evaluation.typeAvct))"
@@ -115,6 +113,7 @@
 				</radiogroup>
 			</div>
 		</hlayout>
+		
 		<separator />
 		<label
 			value="Commentaires éventuels de l'évalué concernant l'appréciation"
@@ -149,8 +148,7 @@
 						disabled="@bind(not vm.modification)" value="${false}" />
 				</radiogroup>
 			</hlayout>
-			<vlayout
-				visible="@bind(vm.isAvancementDifferencieCAP(vm.evaluation.typeAvct,vm.evaluation.cap))">
+			<vlayout visible="@bind(vm.isAvancementDifferencieCAP(vm.evaluation.typeAvct,vm.evaluation.cap))">
 				<label
 					value="Dans le cadre de l'avancement différencié (pour les agents du CAG, de l'OPT, du cadre socio-éducatif, du cadre de la santé..), les résultats professionnels obtenus par l'agent depuis son dernier avancement d'échelon, au regard des objectifs assignés et des conditions d'organisation et de fonctionnement du service dont il relève, font que je sollicite un avancement d'échelon à la " />
 				<div align="center">
@@ -170,6 +168,8 @@
 				</div>
 			</vlayout>
 			<separator />
+			
+			
 			<label
 				visible="@bind(vm.isAvancementDifferencieCAP(vm.evaluation.typeAvct,vm.evaluation.cap))"
 				value="Rapport circonstancié pour les demandes d'avancement d'échelon à la durée minimale ou maximale (obligatoire)"
