@@ -735,11 +735,11 @@ public class DemandesViewModel extends AbstractViewModel implements Serializable
 	public String events(HttpServletRequest request) {
 
 		@SuppressWarnings("unchecked")
-		List<DemandeDto> listDemandes = (List<DemandeDto>) request.getSession().getAttribute("listeDemandes");
+		ResultListDemandeDto resultListDemandes = (ResultListDemandeDto) request.getSession().getAttribute("listeDemandes");
 		@SuppressWarnings("unchecked")
 		List<AgentWithServiceDto> listeAgents = (List<AgentWithServiceDto>) request.getSession().getAttribute("listeAgents");
 
-		CustomEventsManager evs = new CustomEventsManager(request, listDemandes, listeAgents);
+		CustomEventsManager evs = new CustomEventsManager(request, resultListDemandes.getListDemandesDto(), listeAgents);
 		return evs.run();
 	}
 

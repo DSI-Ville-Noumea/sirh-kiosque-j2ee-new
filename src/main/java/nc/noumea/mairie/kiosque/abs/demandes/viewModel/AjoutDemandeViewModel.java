@@ -357,15 +357,18 @@ public class AjoutDemandeViewModel {
 	@Command
 	@NotifyChange({ "demandeCreation" })
 	public void refreshNombreITT() {
+	    
+		// #41504 : Si la case "Sans arrêt de travail" est cochée, alors le nombre d'ITT doit être 0
+		// #41701 : Il faut aussi mettre à jour la date de fin
+		if (getDemandeCreation().isSansArretTravail()) {
+			getDemandeCreation().setNombreITT(0d);
+			getDemandeCreation().setDateFin(getDemandeCreation().getDateDebut());
+			return;
+		}
+		
 		if (getDemandeCreation().getDateDebut() != null && getDemandeCreation().getDateFin() != null 
 				&& (getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.ACCIDENT_TRAVAIL.getValue()) || getTypeAbsenceCourant().getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.RECHUTE_AT.getValue())) ) {
 			Long nbITT = null;
-		    
-			// #41504 : Si la case "Sans arrêt de travail" est cochée, alors le nombre d'ITT doit être 0
-			if (getDemandeCreation().isSansArretTravail()) {
-				getDemandeCreation().setNombreITT(0d);
-				return;
-			}
 			
 			switch (RefTypeAbsenceEnum.getRefTypeAbsenceEnum(getTypeAbsenceCourant().getIdRefTypeAbsence())) {
 				case ACCIDENT_TRAVAIL :
