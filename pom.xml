@@ -5,7 +5,7 @@
 	<groupId>nc.noumea.mairie</groupId>
 	<artifactId>sirh-kiosque-j2ee</artifactId>
 	<packaging>war</packaging>
-	<version>5.02</version>
+	<version>5.03</version>
 	<name>sirh-kiosque-j2ee</name>
 	<description>Kiosque RH en J2EE</description>
 	<organization>
