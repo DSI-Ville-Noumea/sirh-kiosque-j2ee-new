@@ -1,0 +1,80 @@
+<!--
+  #%L
+  sirh-kiosque-j2ee
+  $Id:$
+  $HeadURL:$
+  %%
+  Copyright (C) 2014 - 2017 Mairie de Nouméa
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  <http://www.gnu.org/licenses/gpl-3.0.html>.
+  #L%
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	
+
+	
+	<bean id="delegateAuthenticationProvider"
+		class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+		<constructor-arg>
+			<bean
+				class="org.springframework.security.ldap.authentication.BindAuthenticator">
+				<constructor-arg ref="contextSource" />
+				<property name="userSearch" ref="userSearch" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg ref="authoritiesPopulator" />
+	</bean>
+
+
+
+	<bean id="userSearch"
+		class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+		<constructor-arg index="0" value="ou=z-users,dc=site-mairie,dc=noumea,dc=nc" />
+		<constructor-arg index="1" value="(sAMAccountName={0})" />
+		<constructor-arg index="2" ref="contextSource" />
+		<property name="searchSubtree" value="true" />
+	</bean>
+
+
+
+	<bean id="contextSource"
+		class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+		<constructor-arg index="0">
+			<list>
+				<value>ldap://hurle.site-mairie.noumea.nc:389</value>
+				<value>ldap://gberge.site-mairie.noumea.nc:389</value>
+				<value>ldap://netone.site-mairie.noumea.nc:389</value>
+			</list>
+		</constructor-arg>
+
+		<constructor-arg type="java.lang.String" index="1">
+			<value></value>
+		</constructor-arg>
+
+		<!-- Completer avec un user dedie, a discretion de l'infra, c'est le user 
+			qui a le droit de lire l'AD -->
+
+		<property name="userDn"
+			value="cn=***REMOVED***,ou=was,ou=appli,ou=z-users,dc=site-mairie,dc=noumea,dc=nc" />
+		<property name="password" value="***REMOVED***" />
+
+	</bean>
+
+
+
+</beans>

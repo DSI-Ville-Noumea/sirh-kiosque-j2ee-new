@@ -40,7 +40,7 @@
 	<!-- WS SIRH-ABS-WS -->
 	<!-- -->
 	<Environment name="SIRH_ABS_WS_URL" type="java.lang.String"
-		description="SIRH ABS WS endpoint url" value="http://localhost:8080/sirh-abs-ws/"
+		description="SIRH ABS WS endpoint url" value="http://svi-tomcat0:8210/sirh-abs-ws/"
 		override="false" />
 
 	<!-- -->
@@ -89,30 +89,21 @@
 	<Environment name="TYPE_ENV" type="java.lang.String"
 		description="Type d'environnement (RECETTE ou PROD)" value="RECETTE"
 		override="false" />
-
-	<!-- -->
-	<!-- Paramètres LDAP -->
-	<!-- -->
-	<Parameter description="Critère de recherche LDAP" name="CRITERE_RECHERCHE_LDAP"
-		override="false" value="samaccountname" />
-	<Parameter description="Admin LDAP" name="HOST_LDAP_ADMIN"
-		override="false" value="cn=adminwas,ou=WAS,ou=APPLI,ou=Z-users" />
-	<Parameter description="Init CTX LDAP" name="INITCTX_LDAP"
-		override="false" value="com.sun.jndi.ldap.LdapCtxFactory" />
-	<Parameter description="Mot de passe de l'hôte LDAP" name="HOST_LDAP_PASSWORD"
-		override="false" value="***REMOVED***" />
-	<Parameter description="Base LDAP" name="BASE_LDAP" override="false"
-		value="dc=site-mairie,dc=noumea,dc=nc" />
-	<Parameter description="Hôte LDAP" name="HOST_LDAP" override="false"
-		value="ldap://hurle:389/" />
-	<Parameter description="Hôte LDAP 2" name="HOST_LDAP2"
-		override="false" value="ldap://gberge:389/" />
-	<Parameter description="Hôte LDAP 3" name="HOST_LDAP3"
-		override="false" value="ldap://netone:389/" />
 		
 	 <!-- Nombre de mois dans le passé pour l'affichage par defaut de la liste des demandes dans le kiosque  -->
      <Environment description="Nombre mois liste demandes" name="NB_MOIS_PASSE_LISTE_DEMANDES"
 	     type="java.lang.String" override="false" value="2" />
+	
+	<!-- Déclaration d’un classpath virtuel afin de pouvoir centraliser les 
+		fichiers de configuration de sécurité spring -->	     
+	<!-- <Loader className="org.apache.catalina.loader.VirtualWebappLoader" 
+		virtualClasspath="/home/nicno85/WORKSPACE/sirh-kiosque-j2ee/src/main/webapp/META-INF/" /> -->
+	<Loader className="org.apache.catalina.loader.VirtualWebappLoader"  virtualClasspath="TOMCAT_HOME/conf/"/>
+	<!-- Déclaration de la variable "spring.security.sirh-kiosque-j2ee" précisant 
+		le chemin (dans le classpath) et le nom du fichier de configuration de la 
+		sécurité -->
+	<Environment name="spring.security.sirh-kiosque-j2ee"
+		value="classpath:sirh-kiosque-j2ee-spring-security.xml" type="java.lang.String" />
 	
 
 </Context>
