@@ -1,34 +1,23 @@
 <zk>
-<?meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" ?>
+	<?meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" ?>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('nc.noumea.mairie.kiosque.viewModel.ConnexionViewModel')"
+		viewModel="@id('vm') @init('nc.noumea.mairie.kiosque.viewModel.HeaderViewModel')"
 		height="100%">
 		<style>
-			.z-north .z-window-content .z-a { 
-				color:#FFFFFF;
-				text-decoration: none;
-		    }
-		    .divName {
-		    	float: left;
-		    	margin : 15px; 
-		    }
-		    
-		    .disconnect {
-		    	float: right;
-		    	margin: 15px;
-		    	margin-right:20px;
-		    }
+			.z-north .z-window-content .z-a { color:#FFFFFF;
+			text-decoration: none; } .divName { float: left; margin :
+			15px; }
+
+			.disconnect { float: right; margin: 15px; margin-right:20px;
+			}
 		</style>
-		
-		<div class="divName">
+
+		<div class="divName" visible="@load(vm.currentUser ne null)">
 			<label sclass="value" value="Bonjour " />
 			<label sclass="value"
 				value="@bind(vm.getPrenomAgent(vm.currentUser.agent.prenomUsage))" />
 		</div>
-		
-		<a class="disconnect" onClick="@command('disconnect')">
-			Se déconnecter
-		</a>
-		
+		<a href="logout" class="disconnect">Se déconnecter</a>
+
 	</window>
 </zk>
