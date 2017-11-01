@@ -70,7 +70,7 @@
 		<java.version>7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.3.11.RELEASE</spring.version>
-		<zk.version>7.0.4</zk.version>
+		<zk.version>8.0.2.2</zk.version>
 		<tomcat.version>7.0.55</tomcat.version>
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
@@ -87,6 +87,7 @@
 		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
 		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
 		<checksum-maven-plugin.version>1.4</checksum-maven-plugin.version>
+		<spring-security.version>4.2.3.RELEASE</spring-security.version>
 	</properties>
 
 	<licenses>
@@ -120,6 +121,22 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- Spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
 		<!-- CMIS ALfresco Client -->
 		<dependency>
 			<groupId>com.github.DSI-Ville-Noumea</groupId>
