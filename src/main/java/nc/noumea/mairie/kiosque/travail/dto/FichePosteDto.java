@@ -27,6 +27,7 @@ package nc.noumea.mairie.kiosque.travail.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -480,7 +481,8 @@ public class FichePosteDto {
 	}
 
 	public Map<String, List<String>> getActiviteMetierFormate() {
-		Map<String, List<String>> activiteMetierFormate = new HashMap<>();
+		// #42584 : LinkledHashMap instead of Map, to keep order
+		LinkedHashMap<String, List<String>> activiteMetierFormate = new LinkedHashMap();
 		if (activiteMetier == null) {
 			return activiteMetierFormate;
 		}
