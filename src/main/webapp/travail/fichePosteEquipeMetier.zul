@@ -148,16 +148,12 @@
                     Activités métier et savoir-faire
                 </div>
                 <div sclass="RHContent">
-                    <zk
-                            forEach="${each.activiteMetierFormate}">
+                    <zk forEach="${each.activiteMetierFormate}">
                         <div>
-                            <label sclass="value"
-                                   value="${each.key}"/>
-                            <zk
-                                    forEach="${each.value}">
+                            <label sclass="value" value="${each.key}"/>
+                            <zk forEach="${each.value}">
                                 <div>
-                                    <label sclass="value"
-                                           value=" * ${each}"/>
+                                    <label sclass="value" value=" * ${each}"/>
                                 </div>
                             </zk>
                         </div>
