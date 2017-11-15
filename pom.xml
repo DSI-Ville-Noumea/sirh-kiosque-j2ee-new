@@ -70,7 +70,8 @@
 		<java.version>7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.3.11.RELEASE</spring.version>
-		<zk.version>8.0.2.2</zk.version>
+		<!-- ZK Does NOT work with version 8 -->
+		<zk.version>7.0.4</zk.version>
 		<tomcat.version>7.0.55</tomcat.version>
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
