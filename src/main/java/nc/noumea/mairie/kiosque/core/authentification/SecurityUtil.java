@@ -70,8 +70,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -79,8 +77,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.ldap.userdetails.LdapUserDetails;
-import org.zkoss.zk.ui.Executions;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import nc.noumea.mairie.kiosque.dto.LightUserDto;
 import nc.noumea.mairie.kiosque.profil.dto.ProfilAgentDto;
@@ -105,26 +102,11 @@ public class SecurityUtil {
 	public static ProfilAgentDto getUser(IRadiWSConsumer radiWSConsumer, ISirhWSConsumer sirhWsConsumer) throws Exception {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
-			// cas de l'usurpation d'identité
-			HttpServletRequest request = (HttpServletRequest) Executions.getCurrent().getNativeRequest();
-			if (request.getHeader("host").contains("localhost")) {
-				// mettez votre login ou celui du user de qui vous voulez
-				// prendre l'identité
-				String userUsurpation = "";
-				try {
-					LightUserDto userDto = radiWSConsumer.getAgentCompteADByLogin(userUsurpation);
-					ProfilAgentDto profilAgent = sirhWsConsumer.getEtatCivil(userDto.getEmployeeNumber());
-					return profilAgent;
-				} catch (Exception e) {
-					throw new Exception("Erreur, pensez à modifier le user usurpation");
-				}
-
-			} else {
-
 				try {
 					Object p = auth.getPrincipal();
-					if (p instanceof LdapUserDetails) {
-						LightUserDto userDto = radiWSConsumer.getAgentCompteADByLogin(((LdapUserDetails) p).getUsername());
+
+					if (p instanceof UserDetails) {
+						LightUserDto userDto = radiWSConsumer.getAgentCompteADByLogin(((UserDetails) p).getUsername());
 						ProfilAgentDto profilAgent = sirhWsConsumer.getEtatCivil(userDto.getEmployeeNumber());
 						return profilAgent;
 					}
@@ -133,7 +115,6 @@ public class SecurityUtil {
 					LOGGER.error(e.getMessage(), e);
 					throw e;
 				}
-			}
 		}
 		return null;
 	}
