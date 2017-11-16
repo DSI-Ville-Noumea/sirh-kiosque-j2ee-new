@@ -73,7 +73,7 @@
 	</sec:http>
 
 	<sec:authentication-manager>
-		<sec:authentication-provider ref="valveAuthenticationProvider" />
+		<sec:authentication-provider ref="customLdapAuthProvider" />
 	</sec:authentication-manager>
 
 	<bean id="valveAuthenticationProvider"
@@ -102,4 +102,11 @@
 			</list>
 		</constructor-arg>
 	</bean>
+
+    <!-- Mock authentication provider -->
+    <bean id="customLdapAuthProvider" class="nc.noumea.mairie.kiosque.core.authentification.MockAuthenticationProvider">
+        <constructor-arg name="authoritiesPopulator">
+            <bean class="nc.noumea.mairie.kiosque.core.authentification.KiosqueAuthoritiesPopulator"/>
+        </constructor-arg>
+    </bean>
 </beans>
