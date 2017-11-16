@@ -73,7 +73,7 @@
 	</sec:http>
 
 	<sec:authentication-manager>
-		<sec:authentication-provider ref="customLdapAuthProvider" />
+		<sec:authentication-provider ref="valveAuthenticationProvider" />
 	</sec:authentication-manager>
 
 	<bean id="valveAuthenticationProvider"
