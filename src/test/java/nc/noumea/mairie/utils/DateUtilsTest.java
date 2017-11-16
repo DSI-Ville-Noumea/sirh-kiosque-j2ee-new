@@ -34,7 +34,7 @@ import org.junit.Test;
 
 public class DateUtilsTest {
 
-	SimpleDateFormat	sdf	= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	SimpleDateFormat	sdf	= new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	@Test
 	public void getCurrentDateMoinsXMois() {
