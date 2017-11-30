@@ -525,6 +525,13 @@ public class ModifierDemandeViewModel {
 					vList.add(new ValidationMessage("La date de déclaration est obligatoire."));
 				}
 			}
+
+			// Pièce jointe
+			if (getDemandeCourant().getTypeSaisi().isPieceJointe()) {
+				if (getDemandeCourant().getPiecesJointes() == null || getDemandeCourant().getPiecesJointes().isEmpty()) {
+					vList.add(new ValidationMessage("Une pièce jointe est obligatoire avec la demande."));
+				}
+			}
 		} else if (getDemandeCourant().getTypeSaisiCongeAnnuel() != null) {
 			if (getDemandeCourant().getTypeSaisiCongeAnnuel().isChkDateDebut()) {
 				if (getSelectDebutAM() == null) {
