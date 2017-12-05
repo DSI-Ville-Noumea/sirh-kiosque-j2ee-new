@@ -162,6 +162,17 @@ public class AjoutDemandeViewModel {
 		setListeTypeAbsence(null);
 	}
 
+	/**
+	 * This method is used by the front, to display information message for the 'Récupérations'
+	 */
+	@Command
+	@NotifyChange({ "listeGroupeAbsence", "typeAbsenceCourant", "groupeAbsence", "listeTypeAbsence" })
+	public boolean isTypeRecup(RefTypeAbsenceDto type) {
+		return type != null 
+				&& type.getIdRefTypeAbsence() != null 
+				&& type.getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.RECUP.getValue());
+	}
+
 	@Command
 	@NotifyChange({ "listeTypeAbsence", "typeAbsenceCourant",
 			"listeOrganisationsSyndicale", "etatDemandeCreation",
@@ -584,8 +595,7 @@ public class AjoutDemandeViewModel {
 
 			// DUREE
 			if (refTypeAbsenceDto.getTypeSaisiDto().isDuree()) {
-				if (getDureeHeureDemande() == null
-						|| getDureeMinuteDemande() == null) {
+				if (getDureeHeureDemande() == null || getDureeMinuteDemande() == null) {
 					vList.add(new ValidationMessage("La durée est obligatoire."));
 				}
 			}
