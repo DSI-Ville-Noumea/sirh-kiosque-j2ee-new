@@ -1,5 +1,10 @@
 package nc.noumea.mairie.kiosque.ptg.viewModel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /*
  * #%L
  * sirh-kiosque-j2ee
@@ -30,6 +35,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.joda.time.DateTime;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Tab;
+
 import nc.noumea.mairie.ads.dto.EntiteDto;
 import nc.noumea.mairie.kiosque.dto.AgentDto;
 import nc.noumea.mairie.kiosque.dto.AgentWithServiceDto;
@@ -39,16 +60,6 @@ import nc.noumea.mairie.kiosque.ptg.dto.RefEtatPointageDto;
 import nc.noumea.mairie.kiosque.ptg.dto.TitreRepasDemandeDto;
 import nc.noumea.mairie.kiosque.validation.ValidationMessage;
 import nc.noumea.mairie.kiosque.viewModel.AbstractViewModel;
-
-import org.joda.time.DateTime;
-import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.select.annotation.VariableResolver;
-import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Tab;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class GestionTitreRepasViewModel extends AbstractViewModel {
@@ -80,6 +91,10 @@ public class GestionTitreRepasViewModel extends AbstractViewModel {
 	private String						tailleListe;
 
 	private boolean						checkAll;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+	private SimpleDateFormat sdfFileName = new SimpleDateFormat("yyyyMMdd");
+	private SimpleDateFormat sdfSaisie = new SimpleDateFormat("dd/MM/yyyy à hh:mm");
 
 	@Init
 	public void initGestionTitreRepas() {
@@ -104,7 +119,72 @@ public class GestionTitreRepasViewModel extends AbstractViewModel {
 	@NotifyChange({ "listeDemandes" })
 	public void setTabDebut(@BindingParam("tab") Tab tab) {
 		setTabCourant(tab);
-		// filtrer(null);
+	}
+	
+	private void failOnEmptyList() {
+		final HashMap<String, Object> map = new HashMap<String, Object>();
+		List<ValidationMessage> listErreur = new ArrayList<ValidationMessage>();
+		listErreur.add(new ValidationMessage("Il n'y a aucun élément à exporter."));
+		map.put("errors", listErreur);
+		Executions.createComponents("/messages/returnMessage.zul", null, map);
+	}
+
+	/**
+	 * Cet export se fait sans passer par ExcelExporter.java, 
+	 * car seules les données visibles dans l'IHM se retrouvent dans l'excel si on exporte l'objet grid. (cf. redmine #43486)
+	 * => Création d'un export spécifique
+	 * 
+	 * @throws IOException
+	 */
+	@Command
+	public void exportExcel() throws IOException {
+		if (listeTitreRepas == null || listeTitreRepas.size() == 0) {
+			failOnEmptyList();
+			return;
+		}
+		
+		Workbook wb = new HSSFWorkbook();
+		Sheet feuillePrincipale = wb.createSheet("Liste SPV");
+
+		// Alimentation des en-têtes
+		Row rowEntete = feuillePrincipale.createRow((short) 0);
+		rowEntete.createCell(0).setCellValue("Agent");
+		rowEntete.createCell(1).setCellValue("Mois");
+		rowEntete.createCell(2).setCellValue("Commandé");
+		rowEntete.createCell(3).setCellValue("Commentaires");
+		rowEntete.createCell(4).setCellValue("Etat");
+		rowEntete.createCell(5).setCellValue("Date de saisie");
+		rowEntete.createCell(6).setCellValue("Opérateur");
+
+		int numeroLigne = 1;
+		
+		// Alimentation des données
+		for (TitreRepasDemandeDto tr : listeTitreRepas) {
+			Row row = feuillePrincipale.createRow((short) numeroLigne);
+			row.createCell(0).setCellValue(concatAgentNomatr(tr.getAgent()));
+			row.createCell(1).setCellValue(sdf.format(tr.getDateMonth()));
+			row.createCell(2).setCellValue(booleanToString(tr.getCommande()));
+			row.createCell(3).setCellValue(tr.getCommentaire());
+			row.createCell(4).setCellValue(etatToString(tr.getIdRefEtat()));
+			row.createCell(5).setCellValue(sdfSaisie.format(tr.getDateSaisie()));
+			row.createCell(6).setCellValue(concatAgent(tr.getOperateur()));
+
+			numeroLigne++;
+		}
+
+		// Aucolumns
+		for (int i = 0; i <= 8; i++) {
+			feuillePrincipale.autoSizeColumn(i);
+		}
+
+		File tempFile = File.createTempFile("tempFile", ".xls");
+		FileOutputStream fileStream = new FileOutputStream(tempFile);
+		wb.write(fileStream);
+		FileInputStream fileInputStream = new FileInputStream(tempFile);
+
+		// Création et sauvegarde du fichier
+		String nomFichier = "gestionTitreRepas_"+sdfFileName.format(new Date()) +".xls";
+		Filedownload.save(IOUtils.toByteArray(fileInputStream), null, nomFichier);
 	}
 
 	@Command
@@ -227,7 +307,7 @@ public class GestionTitreRepasViewModel extends AbstractViewModel {
 				getEtatTitreRepasFiltre() == null ? null : getEtatTitreRepasFiltre().getIdRefEtat(), null,getCommandeFiltre() == null ? null : getCommandeFiltre().equals("oui") ? true : false);
 		setListeTitreRepas(result);
 	}
-
+	
 	@Command
 	@NotifyChange({ "listeTitreRepas", "listeTitreRepasSaisie" })
 	public void doSearch() {

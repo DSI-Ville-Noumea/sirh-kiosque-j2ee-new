@@ -77,6 +77,10 @@
 						<label value="minutes" />
 					</hlayout>
 				</hlayout>
+				
+				<!-- #43270 : Ajout d'un message d'info pour la saisie des récupérations  -->
+				<label visible="@bind(vm.isTypeRecup(vm.typeAbsenceCourant))" style="margin-left:29%;color:red;" value="La saisie des récupérations doit se faire jour par jour" />
+				
 				<hlayout>
 					<hlayout width="155px"
 						visible="@bind(vm.typeAbsenceCourant.typeSaisiDto.calendarDateFin)">

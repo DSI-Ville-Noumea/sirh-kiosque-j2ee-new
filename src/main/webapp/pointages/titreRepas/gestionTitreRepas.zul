@@ -164,21 +164,16 @@
 							<hlayout sclass="fondRecherche">
 								<div>
 									Affichage de
-									<combobox width="50px"
-										selectedItem="@bind(vm.tailleListe)" readonly="true">
+									<combobox width="50px" selectedItem="@bind(vm.tailleListe)" readonly="true">
 										<comboitem value="5" label="5" />
-										<comboitem value="10"
-											label="10" />
-										<comboitem value="15"
-											label="15" />
-										<comboitem value="20"
-											label="20" />
+										<comboitem value="10" label="10" />
+										<comboitem value="15" label="15" />
+										<comboitem value="20" label="20" />
 									</combobox>
 									demandes par page
 									<space />
 									Recherche instantanée :
-									<textbox value="@bind(vm.filter)"
-										onChange="@command('doSearch')" instant="true" />
+									<textbox value="@bind(vm.filter)" onChange="@command('doSearch')" instant="true" />
 								</div>
 							</hlayout>
 							<separator />
@@ -205,29 +200,17 @@
 								</columns>
 								<template name="model">
 									<row>
-										<custom-attributes
-											titreRepas="${each}" />
-										<detail open="false"
-											fulfill="onOpen">
-											<include
-												src="/pointages/titreRepas/histoGestionTitreRepas.zul"
-												titreRepas="${titreRepas}" />
+										<custom-attributes titreRepas="${each}" />
+										<detail open="false" fulfill="onOpen">
+											<include src="/pointages/titreRepas/histoGestionTitreRepas.zul" titreRepas="${titreRepas}" />
 										</detail>
-										<label
-											value="@bind(vm.concatAgentNomatr(each.agent))" />
-										<label
-											value="@bind(each.dateMonth) @converter('formatedDate',format='MM/yyyy')" />
-										<label
-											value="@bind(vm.booleanToString(each.commande))" />
-										<label
-											value="@bind(each.commentaire)"
-											visible="@bind(not empty each.commentaire)" />
-										<label
-											value="@bind(vm.etatToString(each.idRefEtat))" />
-										<label
-											value="@bind(vm.dateSaisieToString(each.dateSaisie))" />
-										<label
-											value="@bind(vm.concatAgent(each.operateur))" />
+										<label value="@bind(vm.concatAgentNomatr(each.agent))" />
+										<label value="@bind(each.dateMonth) @converter('formatedDate',format='MM/yyyy')" />
+										<label value="@bind(vm.booleanToString(each.commande))" />
+										<label value="@bind(each.commentaire)" visible="@bind(not empty each.commentaire)" />
+										<label value="@bind(vm.etatToString(each.idRefEtat))" />
+										<label value="@bind(vm.dateSaisieToString(each.dateSaisie))" />
+										<label value="@bind(vm.concatAgent(each.operateur))" />
 									</row>
 								</template>
 							</grid>
@@ -236,7 +219,11 @@
 				</tabpanels>
 			</tabbox>
 		</div>
-		<include id="includeStyleSoldeAgent"
-			src="/css/pointages/titreRepas.zul" />
+		<div style="display:block;" width="982px">
+			<div style="display:inline-block;float:right;" align="right">
+				<button label="Exp. Excel" onClick="@command('exportExcel')" />
+			</div>
+		</div>
+		<include id="includeStyleSoldeAgent" src="/css/pointages/titreRepas.zul" />
 	</window>
 </zk>

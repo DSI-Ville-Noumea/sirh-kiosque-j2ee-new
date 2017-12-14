@@ -39,6 +39,7 @@ import nc.noumea.mairie.kiosque.abs.dto.OrganisationSyndicaleDto;
 import nc.noumea.mairie.kiosque.abs.dto.PieceJointeDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefGroupeAbsenceDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceDto;
+import nc.noumea.mairie.kiosque.abs.dto.RefTypeAbsenceEnum;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeDto;
 import nc.noumea.mairie.kiosque.abs.dto.RefTypeGroupeAbsenceEnum;
 import nc.noumea.mairie.kiosque.dto.AgentWithServiceDto;
@@ -151,6 +152,17 @@ public class AjoutDemandeAgentViewModel {
 			setDureeHeureDemande(null);
 			setDureeMinuteDemande(null);
 		}
+	}
+
+	/**
+	 * This method is used by the front, to display information message for the 'Récupérations'
+	 */
+	@Command
+	@NotifyChange({ "listeGroupeAbsence", "typeAbsenceCourant", "groupeAbsence", "listeTypeAbsence" })
+	public boolean isTypeRecup(RefTypeAbsenceDto type) {
+		return type != null 
+				&& type.getIdRefTypeAbsence() != null 
+				&& type.getIdRefTypeAbsence().equals(RefTypeAbsenceEnum.RECUP.getValue());
 	}
 
 	@Command
