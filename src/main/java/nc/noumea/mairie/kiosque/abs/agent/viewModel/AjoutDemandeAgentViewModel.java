@@ -372,6 +372,10 @@ public class AjoutDemandeAgentViewModel {
 				for (String error : result.getErrors()) {
 					ValidationMessage vm = new ValidationMessage(error);
 					listErreur.add(vm);
+					// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
+					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
+					if (result.getInfos().contains("La demande a bien été créée."))
+						result.getInfos().remove("La demande a bien été créée.");
 				}
 				for (String info : result.getInfos()) {
 					ValidationMessage vm = new ValidationMessage(info);
