@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -121,6 +123,8 @@ public class AjoutDemandeViewModel {
 	private boolean saisieManuelleDuree;
 
 	private SimpleDateFormat sdfddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
+	
+	private final Logger logger = LoggerFactory.getLogger(AjoutDemandeViewModel.class);
 
 	@Init
 	public void initAjoutDemande() {
@@ -516,9 +520,13 @@ public class AjoutDemandeViewModel {
 				Executions.createComponents("/messages/returnMessage.zul", null, map);
 				return;
 			}
+
+			logger.debug("La demande id {} a bien été sauvegardée sans les PJ.", result.getIdDemande());
 			
 			// puis on sauvegarde les pieces jointes
 			if(getDemandeCreation().getPiecesJointes() != null && !getDemandeCreation().getPiecesJointes().isEmpty()) {
+				logger.debug("Enregistrement de {} pièces jointes pour la demande de l'agent matricule {}.", 
+						getDemandeCreation().getPiecesJointes().size(), getDemandeCreation().getAgentWithServiceDto().getIdAgent());
 				for (PieceJointeDto pj : getDemandeCreation().getPiecesJointes()) {
 					ReturnMessageDto resultPJ = new ReturnMessageDto();
 					resultPJ = absWsConsumer.savePJWithInputStream(getDemandeCreation().getAgentWithServiceDto().getIdAgent(), 
@@ -528,7 +536,10 @@ public class AjoutDemandeViewModel {
 						result.getInfos().addAll(resultPJ.getInfos());
 						result.getErrors().addAll(resultPJ.getErrors());
 					}
+					logger.debug("La PJ de la demande id {} a bien été sauvegardée.", result.getIdDemande());
 				}
+			} else {
+				logger.error("Aucune pièce jointe n'a été trouvée lors de la création de la demande id {} !!", result.getIdDemande());
 			}
 			
 			// message de succes
@@ -539,6 +550,10 @@ public class AjoutDemandeViewModel {
 				for (String error : result.getErrors()) {
 					ValidationMessage vm = new ValidationMessage(error);
 					listErreur.add(vm);
+					// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
+					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
+					if (result.getInfos().contains("La demande a bien été créée."))
+						result.getInfos().remove("La demande a bien été créée.");
 				}
 				for (String info : result.getInfos()) {
 					ValidationMessage vm = new ValidationMessage(info);
