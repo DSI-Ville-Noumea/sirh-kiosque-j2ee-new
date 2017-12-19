@@ -350,6 +350,7 @@ public class AjoutDemandeAgentViewModel {
 				return;
 			}
 			
+			boolean attachementSaved = false;
 			// puis on sauvegarde les pieces jointes
 			if(getDemandeCreation().getPiecesJointes() != null && !getDemandeCreation().getPiecesJointes().isEmpty()) {
 				for (PieceJointeDto pj : getDemandeCreation().getPiecesJointes()) {
@@ -361,22 +362,28 @@ public class AjoutDemandeAgentViewModel {
 						result.getInfos().addAll(resultPJ.getInfos());
 						result.getErrors().addAll(resultPJ.getErrors());
 					}
+					if (resultPJ.getErrors().size() == 0)
+						attachementSaved = true;
 				}
 			}
 			
 			// message de succes
-			if (result.getInfos().size() > 0) {
+			if (result.getInfos().size() > 0 || result.getErrors().size() > 0 || !attachementSaved) {
 				final HashMap<String, Object> map = new HashMap<String, Object>();
 				List<ValidationMessage> listErreur = new ArrayList<ValidationMessage>();
 				List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
 				for (String error : result.getErrors()) {
 					ValidationMessage vm = new ValidationMessage(error);
 					listErreur.add(vm);
-					// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
+				}
+
+				// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
+				if (result.getErrors().size() != 0 || !attachementSaved) {
 					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
 					if (result.getInfos().contains("La demande a bien été créée."))
 						result.getInfos().remove("La demande a bien été créée.");
 				}
+				
 				for (String info : result.getInfos()) {
 					ValidationMessage vm = new ValidationMessage(info);
 					listInfo.add(vm);
