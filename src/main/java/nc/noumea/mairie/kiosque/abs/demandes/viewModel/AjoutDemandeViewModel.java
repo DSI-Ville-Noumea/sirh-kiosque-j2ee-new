@@ -539,21 +539,27 @@ public class AjoutDemandeViewModel {
 					logger.debug("La PJ de la demande id {} a bien été sauvegardée.", result.getIdDemande());
 				}
 			} else {
-				logger.error("Aucune pièce jointe n'a été trouvée lors de la création de la demande id {} !!", result.getIdDemande());
+				logger.debug("Aucune pièce jointe n'a été trouvée lors de la création de la demande id {} !!", result.getIdDemande());
 			}
 			
 			// message de succes
-			if (result.getInfos().size() > 0) {
+			if (result.getInfos().size() > 0 || result.getErrors().size() != 0) {
 				final HashMap<String, Object> map = new HashMap<String, Object>();
 				List<ValidationMessage> listErreur = new ArrayList<ValidationMessage>();
 				List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
-				for (String error : result.getErrors()) {
-					ValidationMessage vm = new ValidationMessage(error);
-					listErreur.add(vm);
+				
+				if (result.getErrors().size() != 0) {
+					for (String error : result.getErrors()) {
+						logger.debug("La demande {} ne s'est pas sauvegardée correctement. Erreur : {}", result.getIdDemande(), error);
+						logger.debug("=> Suppression de la demande.");
+						ValidationMessage vm = new ValidationMessage(error);
+						listErreur.add(vm);
+					}
 					// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
-//					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
-//					if (result.getInfos().contains("La demande a bien été créée."))
-//						result.getInfos().remove("La demande a bien été créée.");
+					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
+					if (result.getInfos().contains("La demande a bien été créée."))
+						result.getInfos().remove("La demande a bien été créée.");
+					logger.info("La demande a bien été supprimée !");
 				}
 				for (String info : result.getInfos()) {
 					ValidationMessage vm = new ValidationMessage(info);
