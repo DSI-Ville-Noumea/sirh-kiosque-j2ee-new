@@ -358,7 +358,7 @@ public class AjoutDemandeAgentViewModel {
 			
 			boolean attachementSaved = false;
 			// puis on sauvegarde les pieces jointes
-			if(getDemandeCreation().getPiecesJointes() != null && !getDemandeCreation().getPiecesJointes().isEmpty()) {
+			if (getDemandeCreation().getPiecesJointes() != null && !getDemandeCreation().getPiecesJointes().isEmpty()) {
 				for (PieceJointeDto pj : getDemandeCreation().getPiecesJointes()) {
 					ReturnMessageDto resultPJ = new ReturnMessageDto();
 					resultPJ = absWsConsumer.savePJWithInputStream(getDemandeCreation().getAgentWithServiceDto().getIdAgent(), 
@@ -373,6 +373,10 @@ public class AjoutDemandeAgentViewModel {
 						logger.debug("La PJ de la demande id {} a bien été sauvegardée.", result.getIdDemande());
 					}
 				}
+			} else if (getTypeAbsenceCourant().getTypeSaisiDto() != null && !getTypeAbsenceCourant().getTypeSaisiDto().isPieceJointe()
+					|| getTypeAbsenceCourant().getTypeSaisiCongeAnnuelDto() != null && !getTypeAbsenceCourant().getTypeSaisiCongeAnnuelDto().isPieceJointe()){
+				logger.debug("Aucune pièce jointe pour cette demande.");
+				attachementSaved = true;
 			}
 			
 			// message de succes
@@ -388,7 +392,7 @@ public class AjoutDemandeAgentViewModel {
 				}
 
 				// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
-				if (result.getErrors().size() != 0 || !attachementSaved) {
+				if ((result.getErrors().size() != 0 || !attachementSaved) && result.getIdDemande() != null) {
 					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
 					if (result.getInfos().contains("La demande a bien été créée."))
 						result.getInfos().remove("La demande a bien été créée.");
