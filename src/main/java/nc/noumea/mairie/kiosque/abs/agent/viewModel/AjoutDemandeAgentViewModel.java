@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import nc.noumea.mairie.kiosque.abs.demandes.viewModel.AjoutDemandeViewModel;
 import nc.noumea.mairie.kiosque.abs.dto.DemandeDto;
 import nc.noumea.mairie.kiosque.abs.dto.OrganisationSyndicaleDto;
 import nc.noumea.mairie.kiosque.abs.dto.PieceJointeDto;
@@ -51,6 +52,8 @@ import nc.noumea.mairie.kiosque.viewModel.TimePicker;
 import nc.noumea.mairie.ws.ISirhAbsWSConsumer;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -113,6 +116,8 @@ public class AjoutDemandeAgentViewModel {
 	private boolean saisieManuelleDuree = false;
 	
 	private SimpleDateFormat sdfddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
+	
+	private final Logger logger = LoggerFactory.getLogger(AjoutDemandeAgentViewModel.class);
 
 	@Init
 	public void initAjoutDemandeAgent() {
@@ -349,6 +354,7 @@ public class AjoutDemandeAgentViewModel {
 				Executions.createComponents("/messages/returnMessage.zul", null, map);
 				return;
 			}
+			logger.debug("La demande id {} a bien été sauvegardée sans les PJ.", result.getIdDemande());
 			
 			boolean attachementSaved = false;
 			// puis on sauvegarde les pieces jointes
@@ -362,8 +368,10 @@ public class AjoutDemandeAgentViewModel {
 						result.getInfos().addAll(resultPJ.getInfos());
 						result.getErrors().addAll(resultPJ.getErrors());
 					}
-					if (resultPJ.getErrors().size() == 0)
+					if (resultPJ.getErrors().size() == 0) {
 						attachementSaved = true;
+						logger.debug("La PJ de la demande id {} a bien été sauvegardée.", result.getIdDemande());
+					}
 				}
 			}
 			
@@ -373,16 +381,19 @@ public class AjoutDemandeAgentViewModel {
 				List<ValidationMessage> listErreur = new ArrayList<ValidationMessage>();
 				List<ValidationMessage> listInfo = new ArrayList<ValidationMessage>();
 				for (String error : result.getErrors()) {
+					logger.debug("La demande {} ne s'est pas sauvegardée correctement. Erreur : {}", result.getIdDemande(), error);
+					logger.debug("=> Suppression de la demande.");
 					ValidationMessage vm = new ValidationMessage(error);
 					listErreur.add(vm);
 				}
 
 				// #43760 : Si on a une erreur, il faut aller supprimer la demande et enlever le message d'information
-//				if (result.getErrors().size() != 0 || !attachementSaved) {
-//					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
-//					if (result.getInfos().contains("La demande a bien été créée."))
-//						result.getInfos().remove("La demande a bien été créée.");
-//				}
+				if (result.getErrors().size() != 0 || !attachementSaved) {
+					absWsConsumer.deleteDemandeAbsence(currentUser.getAgent().getIdAgent(), result.getIdDemande());
+					if (result.getInfos().contains("La demande a bien été créée."))
+						result.getInfos().remove("La demande a bien été créée.");
+					logger.debug("La demande {} a bien été supprimée.", result.getIdDemande());
+				}
 				
 				for (String info : result.getInfos()) {
 					ValidationMessage vm = new ValidationMessage(info);
