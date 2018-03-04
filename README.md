@@ -1,6 +1,7 @@
 # sirh-kiosque-j2ee
 
-[![Build Status](https://travis-ci.org/DSI-Ville-Noumea/sirh-kiosque-j2ee.svg?branch=master)](https://travis-ci.org/DSI-Ville-Noumea/sirh-kiosque-j2ee) [![Coverage Status](https://coveralls.io/repos/github/DSI-Ville-Noumea/sirh-kiosque-j2ee/badge.svg)](https://coveralls.io/github/DSI-Ville-Noumea/sirh-kiosque-j2ee) [![Dependency Status](https://www.versioneye.com/user/projects/593e0406368b08004e51462e/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/593e0406368b08004e51462e)
+[![Build Status](https://travis-ci.org/DSI-Ville-Noumea/sirh-kiosque-j2ee.svg?branch=master)](https://travis-ci.org/DSI-Ville-Noumea/sirh-kiosque-j2ee) 
+[![Coverage Status](https://coveralls.io/repos/github/DSI-Ville-Noumea/sirh-kiosque-j2ee/badge.svg)](https://coveralls.io/github/DSI-Ville-Noumea/sirh-kiosque-j2ee)
 
 
 #### Installation
