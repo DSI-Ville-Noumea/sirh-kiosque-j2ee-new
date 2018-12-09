@@ -25,6 +25,7 @@ package nc.noumea.mairie.kiosque.viewModel;
  */
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class MenuViewModel extends AbstractViewModel implements Serializable {
 	private boolean absWsOk = true;
 
 	@Init
-	public void initMenu() {
+	public void initMenu() throws ParseException {
 
 		if (environnementService.isRecette()) {
 			setAfficheRecette(true);
@@ -63,13 +64,18 @@ public class MenuViewModel extends AbstractViewModel implements Serializable {
 			setAfficheRecette(false);
 		}
 		
-		if(null == getDroitsAbsence()) {
+		// Blocage de la saisie des pointages et absences après de la MEP de GTA
+		if (!environnementService.saisieAbsAndPtgOpen()) {
 			absWsOk = false;
+			droitsModulePointage = false;
+		} else {
+			if(null == getDroitsAbsence()) {
+				absWsOk = false;
+			}
+			/* Pour les pointages */
+			setDroitsModulePointage(getDroitsPointage() == null ? false : getDroitsPointage().isApprobation() || getDroitsPointage().isFiches() || getDroitsPointage().isGestionDroitsAcces()
+					|| getDroitsPointage().isSaisie() || getDroitsPointage().isVisualisation() || getDroitsPointage().isTitreRepas()|| getDroitsPointage().isTitreRepasAgent() );
 		}
-
-		/* Pour les pointages */
-		setDroitsModulePointage(getDroitsPointage() == null ? false : getDroitsPointage().isApprobation() || getDroitsPointage().isFiches() || getDroitsPointage().isGestionDroitsAcces()
-				|| getDroitsPointage().isSaisie() || getDroitsPointage().isVisualisation() || getDroitsPointage().isTitreRepas()|| getDroitsPointage().isTitreRepasAgent() );
 	}
 
 	public boolean ouvreGestionTitreRepas() {
