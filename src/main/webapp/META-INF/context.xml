@@ -96,7 +96,10 @@
 	
 	<!-- Déclaration d’un classpath virtuel afin de pouvoir centraliser les 
 		fichiers de configuration de sécurité spring -->	     
-	<Loader className="org.apache.catalina.loader.VirtualWebappLoader" virtualClasspath="/mnt/datas/WORKSPACE/sirh-kiosque-j2ee/src/main/webapp/META-INF/" />
+	<!-- <Loader className="org.apache.catalina.loader.VirtualWebappLoader" 
+		virtualClasspath="/home/nicno85/WORKSPACE/sirh-kiosque-j2ee/src/main/webapp/META-INF/" /> -->
+	<Loader className="org.apache.catalina.loader.VirtualWebappLoader"  virtualClasspath="TOMCAT_HOME/conf/"/>
+	
 	<!-- Déclaration de la variable "spring.security.sirh-kiosque-j2ee" précisant 
 		le chemin (dans le classpath) et le nom du fichier de configuration de la 
 		sécurité -->
