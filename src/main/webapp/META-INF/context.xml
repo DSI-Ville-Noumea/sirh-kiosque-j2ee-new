@@ -95,9 +95,9 @@
 	     type="java.lang.String" override="false" value="2" />
 	
 	<!-- Déclaration d’un classpath virtuel afin de pouvoir centraliser les 
-		fichiers de configuration de sécurité spring -->	     
+		fichiers de configuration de sécurité spring -->
 	<!-- <Loader className="org.apache.catalina.loader.VirtualWebappLoader" 
-		virtualClasspath="/home/nicno85/WORKSPACE/sirh-kiosque-j2ee/src/main/webapp/META-INF/" /> -->
+		virtualClasspath="/mnt/datas/WORKSPACE/sirh-kiosque-j2ee/src/main/webapp/META-INF/" /> -->
 	<Loader className="org.apache.catalina.loader.VirtualWebappLoader"  virtualClasspath="TOMCAT_HOME/conf/"/>
 	
 	<!-- Déclaration de la variable "spring.security.sirh-kiosque-j2ee" précisant 
@@ -109,7 +109,7 @@
 	<!-- Date à laquelle les menus de pointages et d'absences doivent être désactivés -->
 	<Environment name="DATE_BLOCAGE_POINTAGES_ABSENCES" type="java.lang.String"
 		description="Parametre pour savoir à quelle date la saisie des pointages et des absences est interdite, date incluse ! (correspond à la date de MEP de GTA)"
-		value="31/12/2018" override="false" />
+		value="28/12/2018 15:00" override="false" />
 	
 
 </Context>

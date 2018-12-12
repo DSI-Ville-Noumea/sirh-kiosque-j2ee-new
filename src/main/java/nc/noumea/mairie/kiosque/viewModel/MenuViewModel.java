@@ -64,7 +64,7 @@ public class MenuViewModel extends AbstractViewModel implements Serializable {
 			setAfficheRecette(false);
 		}
 		
-		// Blocage de la saisie des pointages et absences après de la MEP de GTA
+		// #50377 : Blocage de la saisie des pointages et absences après de la MEP de GTA
 		if (!environnementService.saisieAbsAndPtgOpen()) {
 			absWsOk = false;
 			droitsModulePointage = false;

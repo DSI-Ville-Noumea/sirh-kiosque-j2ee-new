@@ -68,6 +68,6 @@ public class EnvironnementService {
 	}
 	
 	public boolean saisieAbsAndPtgOpen() throws ParseException {
-		return dateBlocagePointagesAbsences == null ? true : new Date().before(new SimpleDateFormat("dd/MM/yyyy").parse(dateBlocagePointagesAbsences));
+		return dateBlocagePointagesAbsences == null ? true : new Date().before(new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateBlocagePointagesAbsences));
 	}
 }
