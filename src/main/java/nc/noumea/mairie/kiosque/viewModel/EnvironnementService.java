@@ -1,5 +1,9 @@
 package nc.noumea.mairie.kiosque.viewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /*
  * #%L
  * sirh-kiosque-j2ee
@@ -35,6 +39,10 @@ public class EnvironnementService {
 	@Qualifier("typeEnvironnement")
 	private String typeEnvironnement;
 
+	@Autowired
+	@Qualifier("dateBlocagePointagesAbsences")
+	private String dateBlocagePointagesAbsences;
+
 	public String getTypeEnvironnement() {
 		return typeEnvironnement;
 	}
@@ -49,5 +57,17 @@ public class EnvironnementService {
 
 	public boolean isProduction() {
 		return getTypeEnvironnement().toUpperCase().equals("PROD");
+	}
+
+	public String getDateBlocagePointagesAbsences() {
+		return dateBlocagePointagesAbsences;
+	}
+
+	public void setDateBlocagePointagesAbsences(String dateBlocagePointagesAbsences) {
+		this.dateBlocagePointagesAbsences = dateBlocagePointagesAbsences;
+	}
+	
+	public boolean saisieAbsAndPtgOpen() throws ParseException {
+		return dateBlocagePointagesAbsences == null ? true : new Date().before(new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateBlocagePointagesAbsences));
 	}
 }
