@@ -5,7 +5,7 @@
 	<groupId>nc.noumea.mairie</groupId>
 	<artifactId>sirh-kiosque-j2ee</artifactId>
 	<packaging>war</packaging>
-	<version>5.08</version>
+	<version>5.09</version>
 	<name>sirh-kiosque-j2ee</name>
 	<description>Kiosque RH en J2EE</description>
 	<organization>
@@ -496,7 +496,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M1</version>
+				<version>2.20.1</version>
 				<!-- On enlève ceci car sinon en faisant clean package, les TU ne sont pas fait 
 				<dependencies>
 					<dependency>
