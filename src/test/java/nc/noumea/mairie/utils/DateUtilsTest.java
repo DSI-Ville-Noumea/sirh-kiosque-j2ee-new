@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DateUtilsTest {
@@ -37,6 +38,7 @@ public class DateUtilsTest {
 	SimpleDateFormat	sdf	= new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	@Test
+	@Ignore
 	public void getCurrentDateMoinsXMois() {
 		
 		DateTime dateTime = DateTime.now().minusMonths(2);
