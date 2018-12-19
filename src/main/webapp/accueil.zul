@@ -48,7 +48,7 @@
 						visible="@bind(vm.droitsAbsence.approuverModif)">
 						<panel id="abs" height="120px"
 							title="Absences à approuver" border="normal" collapsible="true"
-							closable="true" maximizable="true" style="margin-bottom:10px">
+							closable="true" maximizable="true" style="margin-bottom:10px" visible="@bind(vm.isBeforeMigration)">
 							<panelchildren>
 								<vlayout>
 									<a
@@ -67,7 +67,7 @@
 						visible="@bind(vm.droitsAbsence.viserModif)">
 						<panel id="absViser" height="120px"
 							title="Absences à viser" border="normal" collapsible="true"
-							closable="true" maximizable="true" style="margin-bottom:10px">
+							closable="true" maximizable="true" style="margin-bottom:10px" visible="@bind(vm.isBeforeMigration)">
 							<panelchildren>
 								<vlayout>
 									<a
@@ -86,7 +86,7 @@
 						visible="@bind(vm.droitsPointage.approbation)">
 						<panel id="ptg" height="120px"
 							title="Pointages à approuver" border="normal" collapsible="true"
-							closable="true" maximizable="true" style="margin-bottom:10px">
+							closable="true" maximizable="true" style="margin-bottom:10px" visible="@bind(vm.isBeforeMigration)">
 							<panelchildren>
 								<vlayout>
 									<a

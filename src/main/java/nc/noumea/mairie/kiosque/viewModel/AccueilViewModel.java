@@ -25,6 +25,8 @@ package nc.noumea.mairie.kiosque.viewModel;
  */
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,6 +87,20 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 	@Wire
 	private Portallayout portalLayout;
 
+	@WireVariable
+	private String dateBlocagePointagesAbsences;
+
+	@WireVariable
+	private Boolean isBeforeMigration;
+
+	public Boolean getIsBeforeMigration() {
+		return isBeforeMigration;
+	}
+
+	public void setIsBeforeMigration(Boolean isBeforeMigration) {
+		this.isBeforeMigration = isBeforeMigration;
+	}
+
 	@Listen("onPortalMove = #portalLayout")
 	public void saveStatus() {
 		int i = 0;
@@ -117,7 +133,7 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 	}
 
 	@Init
-	public void initAccueil() {
+	public void initAccueil() throws ParseException {
 
 		// message d'accueil
 		List<AccueilRhDto> listeTexte = sirhWsConsumer.getListeTexteAccueil();
@@ -126,6 +142,8 @@ public class AccueilViewModel extends AbstractViewModel implements Serializable 
 			t.setTexteAccueilKiosque(t.getTexteAccueilKiosque().replace("&quot;", "\""));
 			getListeTexteAccueil().add(t);
 		}
+		
+		isBeforeMigration = dateBlocagePointagesAbsences == null ? true : new Date().before(new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(dateBlocagePointagesAbsences));
 
 		// alertes d'accueil
 		ReturnMessageDto alertes = sirhWsConsumer.getAlerteRHByAgent(getCurrentUser().getAgent().getIdAgent());
